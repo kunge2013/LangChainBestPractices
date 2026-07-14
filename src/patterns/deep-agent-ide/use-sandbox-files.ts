@@ -1,7 +1,9 @@
 // [AGC:START] tool=Cc author=fangkun
 import { ref, watch, type Ref } from "vue";
-import { AGENT_SERVER_URL } from "@/constants";
 import type { FileEntry, FileSnapshot, FileTreeNode } from "./types";
+
+// Sandbox API is mounted directly at /sandbox, not under /api/langgraph
+const SANDBOX_API_URL = "/sandbox";
 
 function buildTree(entries: FileEntry[], rootPath: string): FileTreeNode[] {
   const root: FileTreeNode[] = [];
@@ -55,7 +57,7 @@ export function useSandboxFiles(threadIdRef: Ref<string | null>) {
     if (!tid) return { entries: [], sandboxId: null };
     try {
       const res = await fetch(
-        `${AGENT_SERVER_URL}/sandbox/${encodeURIComponent(tid)}/tree?filePath=/app`,
+        `${SANDBOX_API_URL}/${encodeURIComponent(tid)}/tree?filePath=/app`,
       );
       const data = await res.json();
       if (!res.ok || !Array.isArray(data.entries)) {
@@ -82,7 +84,7 @@ export function useSandboxFiles(threadIdRef: Ref<string | null>) {
     if (!tid) return null;
     try {
       const res = await fetch(
-        `${AGENT_SERVER_URL}/sandbox/${encodeURIComponent(tid)}/file?filePath=${encodeURIComponent(path)}`,
+        `${SANDBOX_API_URL}/${encodeURIComponent(tid)}/file?filePath=${encodeURIComponent(path)}`,
       );
       const data = await res.json();
       return data.content ?? null;
