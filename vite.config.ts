@@ -37,6 +37,10 @@ export default defineConfig({
         target: "http://127.0.0.1:2024",
         changeOrigin: true,
       },
+      "/sandbox": {
+        target: "http://127.0.0.1:2024",
+        changeOrigin: true,
+      },
     },
   },
 });
