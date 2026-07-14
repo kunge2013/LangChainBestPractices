@@ -28,7 +28,9 @@
     "marked": "^18.0.4",
     "shiki": "^4.1.0",
     "vue": "^3",
-    "zod": "^4.4.3"
+    "zod": "^4.4.3",
+    "hono": "^4.12.26",
+    "langsmith": "^0.7.5"
   },
   "devDependencies": {
     "@langchain/langgraph-cli": "^1.2.5",
