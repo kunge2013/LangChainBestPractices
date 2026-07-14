@@ -1,0 +1,12 @@
+
+# LangGraph API
+.langgraph_api
+
+# Dependencies
+node_modules/
+dist/
+
+# Environment
+.env
+*.local
+.DS_Store
