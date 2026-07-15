@@ -1,11 +1,11 @@
 import { createDeepAgent } from "deepagents";
 
-if (!process.env.ANTHROPIC_API_KEY) {
-  throw new Error("ANTHROPIC_API_KEY is not set");
-}
+// [AGC:START] tool=Cc author=fangkun
+const modelEnv = process.env.OPENAI_MODEL || "qwen3.5-plus";
+const model = `openai:${modelEnv}`;
 
 export const agent = createDeepAgent({
-  model: "anthropic:claude-haiku-4-5",
+  model,
   systemPrompt: `You are a helpful planning assistant. Your top priority is keeping a live todo list that shows the user exactly where you are in the work.
 
 For every request:
@@ -22,3 +22,4 @@ When every todo is completed, give a concise, well-organized final answer that r
   // Each todo step is multiple graph iterations (write_todos + model turns).
   recursionLimit: 200,
 });
+// [AGC:END]
