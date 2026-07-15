@@ -1,0 +1,14 @@
+{
+  "name": "langchain-pattern-deep-agent-ide",
+  "private": true,
+  "scripts": {
+    "dev:agent": "pnpm --filter @langchain-example/agent dev",
+    "dev:frontend": "pnpm --filter @langchain-example/frontend dev",
+    "dev": "pnpm run dev:agent & pnpm run dev:frontend"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}
