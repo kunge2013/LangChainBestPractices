@@ -1,0 +1,10 @@
+{
+  "id": "obsidian-llm-context-menu",
+  "name": "LLM Context Menu",
+  "version": "1.0.0",
+  "minAppVersion": "1.0.0",
+  "description": "Right-click on selected text to ask LLM for answer with streaming response",
+  "author": "",
+  "authorUrl": "",
+  "isDesktopOnly": false
+}

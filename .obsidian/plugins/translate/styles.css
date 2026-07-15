@@ -1,0 +1,223 @@
+/*
+ * LLM Context Menu Plugin Styles
+ */
+
+:root {
+    --llm-primary: #6366f1;
+    --llm-primary-hover: #4f46e5;
+    --llm-border-radius: 12px;
+    --llm-box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Light theme */
+.llm-modal.theme-light {
+    --llm-bg: #ffffff;
+    --llm-surface: #f8fafc;
+    --llm-text: #1e293b;
+    --llm-text-secondary: #64748b;
+    --llm-border: #e2e8f0;
+    --llm-code-bg: #f1f5f9;
+}
+
+/* Dark theme */
+.llm-modal.theme-dark {
+    --llm-bg: #0f172a;
+    --llm-surface: #1e293b;
+    --llm-text: #f1f5f9;
+    --llm-text-secondary: #94a3b8;
+    --llm-border: #334155;
+    --llm-code-bg: #020617;
+}
+
+/* Modal container */
+.llm-modal {
+    border-radius: var(--llm-border-radius);
+    box-shadow: var(--llm-box-shadow);
+    overflow: hidden;
+    max-width: var(--llm-max-width);
+    margin: 2rem auto;
+    background-color: var(--llm-bg);
+}
+
+/* Apply theme based on settings */
+.llm-modal.theme-auto {
+    background-color: transparent;
+}
+
+.llm-modal.theme-light {
+    background-color: var(--llm-bg);
+}
+
+.llm-modal.theme-dark {
+    background-color: var(--llm-bg);
+}
+
+/* Modal content */
+.llm-modal-content {
+    padding: 0;
+	background-color: #e9cca6;
+}
+
+/* Query preview */
+.llm-query-preview {
+    padding: 16px 24px;
+    background-color: var(--llm-surface);
+    margin: 0;
+}
+
+.llm-query-preview h4 {
+    margin: 0 0 8px 0;
+    color: var(--llm-text-secondary);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.llm-query-content {
+    color: var(--llm-text);
+    font-size: var(--llm-font-size);
+    line-height: 1.5;
+    max-height: 150px;
+    overflow-y: auto;
+    padding: 8px;
+    border-radius: 6px;
+    background-color: var(--llm-bg);
+    border: 1px solid var(--llm-border);
+}
+
+/* Response container */
+.llm-response-container {
+    padding: 16px 24px;
+}
+
+.llm-response-container h4 {
+    margin: 0 0 12px 0;
+    color: var(--llm-text-secondary);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+}
+
+.llm-response-scroll {
+    min-height: 100px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: var(--llm-bg);
+    border: 1px solid var(--llm-border);
+}
+
+.llm-response-scroll * {
+    color: var(--llm-text);
+    font-size: var(--llm-font-size);
+    line-height: 1.7;
+}
+
+.llm-response-scroll p {
+    margin-bottom: 1em;
+}
+
+.llm-response-scroll pre {
+    background-color: var(--llm-code-bg);
+    border: 1px solid var(--llm-border);
+    border-radius: 6px;
+    padding: 12px;
+    overflow-x: auto;
+}
+
+.llm-response-scroll code {
+    background-color: var(--llm-code-bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: calc(var(--llm-font-size) - 2px);
+}
+
+.llm-response-scroll blockquote {
+    border-left: 4px solid var(--llm-primary);
+    padding-left: 16px;
+    margin: 1em 0;
+    color: var(--llm-text-secondary);
+}
+
+/* Status bar */
+.llm-status {
+    padding: 8px 24px;
+    font-size: 12px;
+    color: var(--llm-text-secondary);
+    font-style: italic;
+}
+
+/* Action buttons */
+.llm-actions {
+    display: flex;
+    gap: 12px;
+    padding: 16px 24px 24px 24px;
+    justify-content: flex-end;
+    border-top: 1px solid var(--llm-border);
+    background-color: var(--llm-surface);
+}
+
+.llm-btn {
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    border: 1px solid var(--llm-border);
+    background-color: var(--llm-bg);
+    color: var(--llm-text);
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.llm-btn:hover {
+    background-color: var(--llm-surface);
+    border-color: var(--llm-primary);
+}
+
+.llm-btn.mod-cta {
+    background-color: var(--llm-primary);
+    color: white;
+    border-color: var(--llm-primary);
+}
+
+.llm-btn.mod-cta:hover {
+    background-color: var(--llm-primary-hover);
+    border-color: var(--llm-primary-hover);
+}
+
+/* Context menu icon spacing */
+.llm-context-menu-item .menu-item-icon {
+    margin-right: 8px;
+}
+
+/* Settings page styling */
+.llm-settings-section {
+    margin-bottom: 24px;
+}
+
+.llm-settings-section h3 {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--llm-border);
+}
+
+/* Ensure markdown tables in response fit */
+.llm-response-scroll table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 1em 0;
+}
+
+.llm-response-scroll th,
+.llm-response-scroll td {
+    border: 1px solid var(--llm-border);
+    padding: 6px 12px;
+}
+
+.llm-response-scroll th {
+    background-color: var(--llm-surface);
+    font-weight: 600;
+}

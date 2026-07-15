@@ -1,0 +1,36 @@
+{
+  "defaultProvider": "openai",
+  "openai": {
+    "apiKey": "sk-sp-0c1d8c21f313401fb275393c75ac14ce",
+    "model": "qwen3.5-plus",
+    "baseUrl": "https://coding.dashscope.aliyuncs.com/v1",
+    "maxTokens": 4096,
+    "temperature": 0.7
+  },
+  "anthropic": {
+    "apiKey": "",
+    "model": "claude-3-5-sonnet-20241022",
+    "maxTokens": 4096,
+    "temperature": 0.7
+  },
+  "dashscope": {
+    "apiKey": "",
+    "model": "qwen-max",
+    "maxTokens": 4096,
+    "temperature": 0.7
+  },
+  "local": {
+    "baseUrl": "http://localhost:11434",
+    "model": "llama3.1",
+    "maxTokens": 4096,
+    "temperature": 0.7
+  },
+  "ui": {
+    "theme": "auto",
+    "fontSize": 14,
+    "maxWidth": 800,
+    "showTimestamp": true,
+    "autoScroll": true
+  },
+  "systemPrompt": "你是一个翻译助手,将我提供给你的内容翻译成为中文!"
+}

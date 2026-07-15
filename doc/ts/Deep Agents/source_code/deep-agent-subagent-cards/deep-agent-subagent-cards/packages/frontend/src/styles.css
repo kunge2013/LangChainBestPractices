@@ -1,0 +1,9 @@
+@import "tailwindcss";
+@import "./shared-styles/tokens.css";
+@import "./shared-styles/base.css";
+
+html,
+body,
+#app {
+  height: 100%;
+}

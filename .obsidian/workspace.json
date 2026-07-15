@@ -1,0 +1,248 @@
+{
+  "main": {
+    "id": "c0a312976934546c",
+    "type": "split",
+    "children": [
+      {
+        "id": "9d7f76c69c87d70b",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "9449c2fda70b53b8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "doc/ts/Deep Agents/source_code/deep-agent-subagent-cards/deep-agent-subagent-cards/README.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "README"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4e4e5d93f86d9b75",
+    "type": "split",
+    "children": [
+      {
+        "id": "54efe2892f0be5ca",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d0fa7fecc6d2c9ea",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "c95a7cc5322b5704",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "superp",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "065e75250d857499",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 362.5
+  },
+  "right": {
+    "id": "9d7e57232599b653",
+    "type": "split",
+    "children": [
+      {
+        "id": "1a3a1668f36db074",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "13e50790d774e8e1",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "wiki/index.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "index 的反向链接列表"
+            }
+          },
+          {
+            "id": "1a5f6f91c3a787b2",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "wiki/index.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "index 的出链列表"
+            }
+          },
+          {
+            "id": "8130ee374b3fb24e",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "10aec45c4b8d118a",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "e897b2fc899fe294",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "doc/ts/Deep Agents/source_code/deep-agent-subagent-cards/deep-agent-subagent-cards/README.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "README 的大纲"
+            }
+          },
+          {
+            "id": "c4cfee115c6c6c97",
+            "type": "leaf",
+            "state": {
+              "type": "claudian-view",
+              "state": {},
+              "icon": "bot",
+              "title": "Claudian"
+            }
+          }
+        ],
+        "currentTab": 5
+      }
+    ],
+    "direction": "horizontal",
+    "width": 506.5
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false,
+      "marp-slides:Show Slide Preview": false,
+      "claudian:Open Claudian": false
+    }
+  },
+  "active": "9449c2fda70b53b8",
+  "lastOpenFiles": [
+    "typescript/packages/agent/node_modules/@copilotkit/license-verifier/dist/index.mjs",
+    "typescript/packages/agent/node_modules/@copilotkit/license-verifier/dist/index.js",
+    "typescript/packages/agent/node_modules/@copilotkit/license-verifier/dist/index.d.ts",
+    "typescript/packages/agent/node_modules/@copilotkit/license-verifier/dist/index.d.mts",
+    "typescript/packages/agent/node_modules/@copilotkit/license-verifier/dist",
+    "typescript/packages/agent/node_modules/@remix-run/node-fetch-server/dist/lib/test-server.d.ts.map",
+    "typescript/packages/agent/node_modules/@remix-run/node-fetch-server/dist/lib/test-server.d.ts",
+    "typescript/packages/agent/node_modules/@remix-run/node-fetch-server/dist/lib/test-server.js",
+    "typescript/packages/agent/node_modules/@remix-run/node-fetch-server/dist/lib/request-listener.d.ts.map",
+    "typescript/packages/agent/node_modules/@remix-run/node-fetch-server/dist/lib/request-listener.js",
+    "typescript/packages/agent/node_modules/@remix-run/node-fetch-server/dist/lib/request-listener.d.ts",
+    "typescript/packages/agent/node_modules/@ag-ui/a2ui-toolkit/README.md",
+    "typescript/packages/agent/node_modules/fast-json-patch/README.md",
+    "typescript/packages/agent/node_modules/@ai-sdk/gateway/README.md",
+    "typescript/packages/agent/node_modules/@ai-sdk/gateway/CHANGELOG.md",
+    "typescript/packages/agent/node_modules/@hono/zod-validator/README.md",
+    "typescript/packages/agent/node_modules/@hono/zod-validator/CHANGELOG.md",
+    "typescript/packages/agent/node_modules/@hono/node-ws/README.md",
+    "typescript/packages/agent/node_modules/@hono/node-ws/CHANGELOG.md",
+    "typescript/packages/agent/node_modules/commander/Readme.md",
+    "typescript/packages/agent/node_modules/human-signals/README.md",
+    "typescript/packages/agent/node_modules/get-stream/readme.md",
+    "typescript/packages/agent/node_modules/@clack/core/README.md",
+    "typescript/packages/agent/node_modules/@clack/core/CHANGELOG.md",
+    "typescript/packages/agent/node_modules/@clack/prompts/README.md",
+    "typescript/packages/agent/node_modules/@clack/prompts/CHANGELOG.md",
+    "typescript/packages/agent/node_modules/stacktrace-parser/README.md",
+    "typescript/packages/agent/node_modules/winston-console-format/README.md",
+    "typescript/packages/agent/node_modules/winston-console-format/CHANGELOG.md",
+    "typescript/packages/agent/node_modules/winston-console-format/demo.png",
+    "typescript/packages/agent/node_modules/package-manager-detector/README.md",
+    "typescript/packages/agent/node_modules/@whatwg-node/fetch/README.md",
+    "typescript/packages/agent/node_modules/@whatwg-node/fetch/CHANGELOG.md",
+    "typescript/packages/agent/node_modules/dedent/README.md",
+    "typescript/packages/agent/node_modules/dedent/LICENSE.md",
+    "typescript/packages/agent/node_modules/@langchain/langgraph-cli/README.md",
+    "typescript/packages/agent/node_modules/@envelop/instrumentation/README.md",
+    "typescript/packages/agent/node_modules/pino-pretty/demo.png",
+    "typescript/packages/agent/node_modules/phoenix/priv/static/phoenix.png",
+    "typescript/packages/agent/node_modules/phoenix/priv/static/phoenix-orange.png",
+    "typescript/packages/agent/node_modules/pino/pretty-demo.png",
+    "typescript/packages/agent/node_modules/pino/pino-tree.png",
+    "typescript/packages/agent/node_modules/pino/pino-logo-hire.png",
+    "typescript/packages/agent/node_modules/pino/pino-banner.png",
+    "typescript/packages/agent/node_modules/pino/favicon-32x32.png",
+    "typescript/packages/agent/node_modules/pino/favicon-16x16.png",
+    "raw/articles/tools/CLAUDE CODE/未命名.canvas"
+  ]
+}
