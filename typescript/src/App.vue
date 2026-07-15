@@ -1,6 +1,7 @@
 <script setup lang="ts">
 // [AGC:START] tool=Cc author=fangkun
 import { ref } from "vue";
+import DeepAgentAcpPreview from "./patterns/deep-agent-acp/Preview.vue";
 import DeepAgentSubagentCardsPreview from "./patterns/deep-agent-subagent-cards/Preview.vue";
 import DeepAgentIdePreview from "./patterns/deep-agent-ide/Preview.vue";
 import DeepAgentTodoListPreview from "./patterns/deep-agent-todo-list/Preview.vue";
@@ -14,6 +15,7 @@ const patterns: Pattern[] = [
   { id: "subagent-cards", label: "Subagent Cards" },
   { id: "deep-agent-ide", label: "IDE" },
   { id: "deep-agent-todo-list", label: "Todo List" },
+  { id: "deep-agent-acp", label: "ACP" },
 ];
 
 const activePattern = ref<Pattern>(patterns[0]);
@@ -44,6 +46,7 @@ const activePattern = ref<Pattern>(patterns[0]);
       <DeepAgentSubagentCardsPreview v-if="activePattern.id === 'subagent-cards'" />
       <DeepAgentIdePreview v-else-if="activePattern.id === 'deep-agent-ide'" />
       <DeepAgentTodoListPreview v-else-if="activePattern.id === 'deep-agent-todo-list'" />
+      <DeepAgentAcpPreview v-else-if="activePattern.id === 'deep-agent-acp'" />
     </main>
   </div>
 </template>
