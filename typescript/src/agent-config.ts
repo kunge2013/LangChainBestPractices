@@ -14,4 +14,5 @@ export const AGENT_SERVER_URL = resolveAgentServerUrl();
 export const SLUG_TO_ASSISTANT: Record<string, string> = {
   "deep-agent-subagent-cards": "deep_agent_subagent_cards",
   "deep-agent-ide": "deep_agent_ide",
+  "deep-agent-todo-list": "deep_agent_todo_list",
 };

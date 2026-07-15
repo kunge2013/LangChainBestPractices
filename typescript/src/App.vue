@@ -3,6 +3,7 @@
 import { ref } from "vue";
 import DeepAgentSubagentCardsPreview from "./patterns/deep-agent-subagent-cards/Preview.vue";
 import DeepAgentIdePreview from "./patterns/deep-agent-ide/Preview.vue";
+import DeepAgentTodoListPreview from "./patterns/deep-agent-todo-list/Preview.vue";
 
 interface Pattern {
   id: string;
@@ -12,6 +13,7 @@ interface Pattern {
 const patterns: Pattern[] = [
   { id: "subagent-cards", label: "Subagent Cards" },
   { id: "deep-agent-ide", label: "IDE" },
+  { id: "deep-agent-todo-list", label: "Todo List" },
 ];
 
 const activePattern = ref<Pattern>(patterns[0]);
@@ -41,6 +43,7 @@ const activePattern = ref<Pattern>(patterns[0]);
     <main class="flex-1 min-h-0">
       <DeepAgentSubagentCardsPreview v-if="activePattern.id === 'subagent-cards'" />
       <DeepAgentIdePreview v-else-if="activePattern.id === 'deep-agent-ide'" />
+      <DeepAgentTodoListPreview v-else-if="activePattern.id === 'deep-agent-todo-list'" />
     </main>
   </div>
 </template>
