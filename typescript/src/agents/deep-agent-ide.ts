@@ -5,7 +5,10 @@ import { getOrCreateSandboxForThread, SECURITY_INSTRUCTIONS } from "../api/utils
 
 // [AGC:START] tool=Cc author=fangkun
 export async function agent(runtime: LangGraphRunnableConfig) {
-  const threadId = runtime.configurable?.thread_id as string;
+  const threadId = runtime.configurable?.thread_id as string | undefined;
+  if (!threadId) {
+    throw new Error("deep-agent-ide requires a thread_id in runtime.configurable");
+  }
   const backend = await getOrCreateSandboxForThread(threadId);
 
   const modelEnv = process.env.OPENAI_MODEL || "qwen3.5-plus";
@@ -14,6 +17,7 @@ export async function agent(runtime: LangGraphRunnableConfig) {
   return createDeepAgent({
     model,
     backend,
+    name: "deep-agent-ide",
     systemPrompt: `You are an expert Node.js developer working on a project in /app.
 The project is a simple REST API for managing todos.
 
