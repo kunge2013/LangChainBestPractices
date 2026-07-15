@@ -1,0 +1,20 @@
+{
+  "id": "conv-1784104941422-tsyuxj2sn",
+  "title": "Explain the ACP Protocol",
+  "titleGenerationStatus": "success",
+  "createdAt": 1784104941424,
+  "updatedAt": 1784104976193,
+  "lastResponseAt": 1784104976193,
+  "sessionId": "5e216a49-47f1-48bd-9143-7a85b1e1e671",
+  "sdkSessionId": "5e216a49-47f1-48bd-9143-7a85b1e1e671",
+  "currentNote": "doc/ts/Deep Agents/20. Agent Client Protocol (ACP).md",
+  "usage": {
+    "model": "glm-4.7",
+    "inputTokens": 59625,
+    "cacheCreationInputTokens": 0,
+    "cacheReadInputTokens": 0,
+    "contextWindow": 200000,
+    "contextTokens": 59625,
+    "percentage": 30
+  }
+}

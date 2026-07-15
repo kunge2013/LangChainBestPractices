@@ -1,7 +1,0 @@
-{
-  "node_version": "22",
-  "graphs": {
-    "deep_agent_subagent_cards": "./agents/deep-agent-subagent-cards.ts:agent"
-  },
-  "env": ".env"
-}

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "doc/ts/Deep Agents/source_code/deep-agent-subagent-cards/deep-agent-subagent-cards/README.md",
+                "file": "doc/ts/Deep Agents/20. Agent Client Protocol (ACP).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "README"
+              "title": "20. Agent Client Protocol (ACP)"
             }
           }
         ]
@@ -197,6 +197,11 @@
   },
   "active": "9449c2fda70b53b8",
   "lastOpenFiles": [
+    "doc/ts/Deep Agents/19.Sandbox.md",
+    "doc/ts/Deep Agents/20. Agent Client Protocol (ACP).md",
+    "doc/ts/Deep Agents/9.Skills.md",
+    "typescript/src/components/SplitView.vue",
+    "doc/ts/Deep Agents/source_code/deep-agent-subagent-cards/deep-agent-subagent-cards/README.md",
     "typescript/packages/agent/node_modules/@copilotkit/license-verifier/dist/index.mjs",
     "typescript/packages/agent/node_modules/@copilotkit/license-verifier/dist/index.js",
     "typescript/packages/agent/node_modules/@copilotkit/license-verifier/dist/index.d.ts",
@@ -206,8 +211,6 @@
     "typescript/packages/agent/node_modules/@remix-run/node-fetch-server/dist/lib/test-server.d.ts",
     "typescript/packages/agent/node_modules/@remix-run/node-fetch-server/dist/lib/test-server.js",
     "typescript/packages/agent/node_modules/@remix-run/node-fetch-server/dist/lib/request-listener.d.ts.map",
-    "typescript/packages/agent/node_modules/@remix-run/node-fetch-server/dist/lib/request-listener.js",
-    "typescript/packages/agent/node_modules/@remix-run/node-fetch-server/dist/lib/request-listener.d.ts",
     "typescript/packages/agent/node_modules/@ag-ui/a2ui-toolkit/README.md",
     "typescript/packages/agent/node_modules/fast-json-patch/README.md",
     "typescript/packages/agent/node_modules/@ai-sdk/gateway/README.md",
@@ -231,9 +234,6 @@
     "typescript/packages/agent/node_modules/@whatwg-node/fetch/README.md",
     "typescript/packages/agent/node_modules/@whatwg-node/fetch/CHANGELOG.md",
     "typescript/packages/agent/node_modules/dedent/README.md",
-    "typescript/packages/agent/node_modules/dedent/LICENSE.md",
-    "typescript/packages/agent/node_modules/@langchain/langgraph-cli/README.md",
-    "typescript/packages/agent/node_modules/@envelop/instrumentation/README.md",
     "typescript/packages/agent/node_modules/pino-pretty/demo.png",
     "typescript/packages/agent/node_modules/phoenix/priv/static/phoenix.png",
     "typescript/packages/agent/node_modules/phoenix/priv/static/phoenix-orange.png",
