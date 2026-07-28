@@ -39,3 +39,15 @@ You can also use the LangSmith Studio Web UI to view and debug agent traces:
 - Open [LangSmith Studio](https://smith.langchain.com/studio/?baseUrl=http://127.0.0.1:2024) in your browser.
 - The `baseUrl=http://127.0.0.1:2024` parameter points to your local LangGraph agent server.
 - Use this to inspect traces, view tool calls, and debug agent behavior during development.
+
+
+## 测试接口向量（linux下避免换行）
+~~~
+curl --location 'https://{workspaceId}.cn-beijing.maas.aliyuncs.com/compatible-mode/v1/embeddings' \
+--header "Authorization: Bearer sk-ws" \
+--header 'Content-Type: application/json' \
+--data '{
+    "model": "text-embedding-v3",
+    "input": "衣服的质量杠杠的"
+}'
+~~~
