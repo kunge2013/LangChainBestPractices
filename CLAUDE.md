@@ -10,10 +10,10 @@ This project is a comprehensive learning resource for the **LangChain framework*
 
 ### Python
 - Use **conda** for virtual environment management
-- Environment name: `LangChainBestPractices`
+- Environment name: `langchain11`
 - Python version: `>= 3.12`
-- Create environment: `conda create -n LangChainBestPractices python>=3.12`
-- Activate: `conda activate LangChainBestPractices`
+- Create environment: `conda create -n langchain11 python>=3.12`
+- Activate: `conda activate langchain11`
 
 ### Node.js / TypeScript
 - Node version: `v22.18.0`
@@ -97,5 +97,5 @@ Each chapter exists under both `doc/python/Deep Agents/` and `doc/ts/Deep Agents
 - Each module is self-contained in its own directory under `python/modules/` or `typescript/modules/`
 - Features are implemented in pairs: one Python, one TypeScript
 - Documentation chapters under `doc/python/` and `doc/ts/` follow the same chapter numbering and naming
-- Use conda environment `LangChainBestPractices` for all Python work
+- Use conda environment `langchain11` for all Python work
 - Use Node `v22.18.0` and npm `11.6.2` for all TypeScript/Node work

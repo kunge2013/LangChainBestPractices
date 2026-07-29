@@ -1,0 +1,10 @@
+{
+  "python_version": "3.12",
+  "dependencies": [
+    "."
+  ],
+  "graphs": {
+    "data_analysis": "./src/data_analysis/agent.py:agent"
+  },
+  "env": ".env"
+}

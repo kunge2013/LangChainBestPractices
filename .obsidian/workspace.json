@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "doc/ts/learn/Retrieval Augmented Generation (RAG) with Deep Agents.md",
+                "file": "doc/python/Test/1. 可视化测试-Get started with Studio.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Retrieval Augmented Generation (RAG) with Deep Agents"
+              "title": "1. 可视化测试-Get started with Studio"
             }
           }
         ]
@@ -195,21 +195,23 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "d0fa7fecc6d2c9ea",
+  "active": "9449c2fda70b53b8",
   "lastOpenFiles": [
-    "typescript/node_modules/@babel",
-    "typescript/node_modules/@copilotkit",
-    "typescript/node_modules/@langchain",
-    "typescript/node_modules/@json-render",
-    "typescript/node_modules",
-    "typescript/_tmp_24748_fddb0aaae41fa1dd078b842759d58d05",
-    "typescript/src/agents/deep-agent-rag.ts",
-    "doc/ts/Deep Agents/20. Agent Client Protocol (ACP).md",
+    "python/app.py",
+    "python/src/data_analysis/__pycache__/agent.cpython-311.pyc",
+    "python/src/data_analysis/__pycache__",
+    "python/src/data_analysis/agent.py",
+    "python/langgraph.json",
+    "doc/python/Test",
+    "未命名",
+    "doc/python/Deep Agents/1.Build a data analysis agent.md",
+    "doc/python/Test/1. 可视化测试-Get started with Studio.md",
+    "python/nul",
+    "python/root/data/analyze_sales.py",
+    "python/src/data_analysis/root/data/analyze_sales.py",
+    "python/src/data_analysis/root/data/sales_data.csv",
     "doc/ts/learn/Retrieval Augmented Generation (RAG) with Deep Agents.md",
-    "doc/ts/learn",
-    "typescript/src/App.vue.tmp.32540.1784106260550",
-    "typescript/src/patterns/deep-agent-acp/types.ts",
-    "typescript/src/patterns/deep-agent-acp/Preview.vue",
+    "doc/ts/Deep Agents/20. Agent Client Protocol (ACP).md",
     "doc/ts/Deep Agents/19.Sandbox.md",
     "doc/ts/Deep Agents/9.Skills.md",
     "doc/ts/Deep Agents/source_code/deep-agent-subagent-cards/deep-agent-subagent-cards/README.md",
@@ -232,8 +234,6 @@
     "typescript/packages/agent/node_modules/winston-console-format/README.md",
     "typescript/packages/agent/node_modules/winston-console-format/CHANGELOG.md",
     "typescript/packages/agent/node_modules/winston-console-format/demo.png",
-    "typescript/packages/agent/node_modules/package-manager-detector/README.md",
-    "typescript/packages/agent/node_modules/@whatwg-node/fetch/README.md",
     "typescript/packages/agent/node_modules/pino-pretty/demo.png",
     "typescript/packages/agent/node_modules/phoenix/priv/static/phoenix.png",
     "typescript/packages/agent/node_modules/phoenix/priv/static/phoenix-orange.png",
