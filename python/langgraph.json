@@ -4,7 +4,8 @@
     "."
   ],
   "graphs": {
-    "data_analysis": "./src/data_analysis/agent.py:agent"
+    "data_analysis": "./src/data_analysis/agent.py:agent",
+    "pg_short_term_memory": "./src/chains/PgShortTermMemory.py:agent"
   },
   "env": ".env"
 }

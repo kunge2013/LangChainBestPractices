@@ -11,7 +11,6 @@ Usage:
 # Must be set BEFORE any other imports to avoid GBK encoding errors on Windows
 import os
 import sys
-
 os.environ["PYTHONUTF8"] = "1"
 os.environ["PYTHONIOENCODING"] = "utf-8"
 sys.stdout.reconfigure(encoding="utf-8")
@@ -108,7 +107,6 @@ def main():
     if args.debug_port:
         print(f"  Debugpy: port {args.debug_port} (attach VSCode debugger here)")
     print()
-
     run_server(
         args.host,
         args.port,
@@ -133,6 +131,8 @@ def main():
         disable_persistence=False,
         ssl_certfile=None,
         ssl_keyfile=None,
+        runtime_edition="inmem",
+        __database_uri__=os.environ.get("DATABASE_URI"),
     )
 
 

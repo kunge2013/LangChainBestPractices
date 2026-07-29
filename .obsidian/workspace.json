@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "doc/python/Test/1. 可视化测试-Get started with Studio.md",
+                "file": "doc/python/langchain/1.LangChain-short-term-memory(短期记忆).md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "1. 可视化测试-Get started with Studio"
+              "title": "1.LangChain-short-term-memory(短期记忆)"
             }
           }
         ]
@@ -197,19 +197,21 @@
   },
   "active": "9449c2fda70b53b8",
   "lastOpenFiles": [
-    "未命名",
-    "python/app.py",
-    "python/src/data_analysis/__pycache__/agent.cpython-311.pyc",
-    "python/src/data_analysis/__pycache__",
-    "python/src/data_analysis/agent.py",
-    "python/langgraph.json",
-    "doc/python/Test",
-    "doc/python/Deep Agents/1.Build a data analysis agent.md",
+    "python/src/chains/__pycache__/PgShortTermMemory.cpython-310.pyc",
+    "python/src/__pycache__/__init__.cpython-310.pyc",
+    "python/src/__pycache__",
+    "python/src/chains/__pycache__/PgShortTermMemory.cpython-311.pyc",
+    "python/src/chains/__pycache__",
+    "python/langgraph.json~",
+    "python/src/chains/PgShortTermMemory.py~",
+    "python/requirements_pg.txt",
+    "requirements_pg.txt",
+    "doc/python/Deep Agents/Deep Agent 理解与 agent.py 核心解析.md",
+    "doc/python/langchain/1.LangChain-short-term-memory(短期记忆).md",
+    "doc/python/langchain",
+    "python/src/chains/PgShortTermMemory.py",
     "doc/python/Test/1. 可视化测试-Get started with Studio.md",
-    "python/nul",
-    "python/root/data/analyze_sales.py",
-    "python/src/data_analysis/root/data/analyze_sales.py",
-    "python/src/data_analysis/root/data/sales_data.csv",
+    "doc/python/Deep Agents/1.Build a data analysis agent.md",
     "doc/ts/learn/Retrieval Augmented Generation (RAG) with Deep Agents.md",
     "doc/ts/Deep Agents/20. Agent Client Protocol (ACP).md",
     "doc/ts/Deep Agents/19.Sandbox.md",
@@ -231,8 +233,6 @@
     "typescript/packages/agent/node_modules/@clack/prompts/README.md",
     "typescript/packages/agent/node_modules/@clack/prompts/CHANGELOG.md",
     "typescript/packages/agent/node_modules/stacktrace-parser/README.md",
-    "typescript/packages/agent/node_modules/winston-console-format/README.md",
-    "typescript/packages/agent/node_modules/winston-console-format/CHANGELOG.md",
     "typescript/packages/agent/node_modules/winston-console-format/demo.png",
     "typescript/packages/agent/node_modules/pino-pretty/demo.png",
     "typescript/packages/agent/node_modules/phoenix/priv/static/phoenix.png",
