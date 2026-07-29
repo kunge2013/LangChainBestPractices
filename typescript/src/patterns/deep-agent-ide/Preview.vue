@@ -3,6 +3,7 @@
 import { ref, watch, computed, inject } from "vue";
 import { useStream } from "@langchain/vue";
 import { ToolMessage, AIMessage } from "langchain";
+import { setSandboxThreadId } from "@/agents/deep-agent-ide";
 import type { agent as deepAgentIdeAgent } from "@/agents/deep-agent-ide";
 const DEEP_AGENT_SANDBOX_THREAD_STORAGE_KEY = "sandbox-thread-id";
 
@@ -24,17 +25,19 @@ function extractFilePathFromToolCall(name: string, args: Record<string, unknown>
   return null;
 }
 
-const threadId = ref<string | null>(
-  typeof sessionStorage !== "undefined"
-    ? sessionStorage.getItem(DEEP_AGENT_SANDBOX_THREAD_STORAGE_KEY)
-    : null,
-);
+const initialThreadId = typeof sessionStorage !== "undefined"
+  ? sessionStorage.getItem(DEEP_AGENT_SANDBOX_THREAD_STORAGE_KEY)
+  : null;
+if (initialThreadId) setSandboxThreadId(initialThreadId);
+
+const threadId = ref<string | null>(initialThreadId);
 
 function updateThreadId(id: string | null) {
   threadId.value = id;
   if (typeof sessionStorage === "undefined") return;
   if (id) sessionStorage.setItem(DEEP_AGENT_SANDBOX_THREAD_STORAGE_KEY, id);
   else sessionStorage.removeItem(DEEP_AGENT_SANDBOX_THREAD_STORAGE_KEY);
+  if (id) setSandboxThreadId(id);
 }
 
 const stream = useStream<typeof deepAgentIdeAgent>({
