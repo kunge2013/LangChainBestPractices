@@ -95,7 +95,7 @@ def test_supervisor_agent():
     for event in supervisor_agent.stream(
             {"messages": [
                 {
-                    "role": "user", "content": "定时提醒我， 2026-01-01 8点 会议， 发邮件通知给7667@qq.com ，抄送 676@qq.com"
+                    "role": "user", "content": "定时提醒我， 2026-01-01 8点 会议，会议人员zhangsan@qq.com, 时长10分钟， 发邮件通知给7667@qq.com ，抄送 676@qq.com"
                 }
             ]}, stream_mode="values"
     ):
