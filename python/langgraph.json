@@ -1,11 +1,13 @@
 {
   "python_version": "3.12",
   "dependencies": [
-    "."
+    ".",
+    "./src/base_practice/15.multi-agent/*"
   ],
   "graphs": {
     "data_analysis": "./src/data_analysis/agent.py:agent",
-    "pg_short_term_memory": "./src/chains/PgShortTermMemory.py:agent"
+    "pg_short_term_memory": "./src/chains/PgShortTermMemory.py:agent",
+    "handoff_agent": "./src/base_practice/15.multi-agent/handoff_agent.py:main_agent"
   },
   "env": ".env"
 }
