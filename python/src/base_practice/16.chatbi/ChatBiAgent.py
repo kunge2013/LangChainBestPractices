@@ -49,8 +49,9 @@ def init_db():
     conn.commit()
     conn.close()
     print("✅ SQLite 数据库初始化完成。")
-
-init_db()
+initDb =os.environ.get("init_db", "True").lower() == 'true'
+if initDb:
+    init_db()
 
 # ======================== 3. 业务映射与本体 ========================
 ENTITY_TO_ID = {
@@ -209,18 +210,15 @@ agent = create_deep_agent(
     system_prompt=SystemMessage(content=system_prompt)
 )
 
-# ======================== 6. 运行示例 ========================
-if __name__ == "__main__":
+
+def test_ask_question():
     user_input = "上个月 武汉字节跳动应收多少"
     print(f"👤 用户: {user_input}\n")
-
     # 调用 Agent
     result = agent.invoke({"messages": [HumanMessage(content=user_input)]})
-
     # 提取最终回答
     final_message = result["messages"][-1]
     final_answer = final_message.content
-
     # 打印完整消息历史（用于追踪工具调用）
     print("=" * 60)
     print("🧠 完整执行链路追踪（工具调用顺序）")
@@ -237,5 +235,8 @@ if __name__ == "__main__":
         elif msg.type == "tool":
             print(f"🔧 工具 {msg.name} 返回: {msg.content}")
     print("=" * 60)
-
     print(f"\n💬 最终回复: {final_answer}")
+
+
+# ======================== 6. 运行示例 ========================
+# test_ask_question()
