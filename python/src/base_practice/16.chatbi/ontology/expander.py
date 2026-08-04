@@ -80,7 +80,9 @@ class OntologyExpander:
             result = self.query_engine.expand_concept(normalized_name, **kwargs)
 
             if result:
-                if isinstance(result, dict):
+                # For "both" return type, preserve the dict
+                return_type = kwargs.get("return_type", "business_name")
+                if isinstance(result, dict) and return_type != "both":
                     return list(result.keys())
                 return result
             logger.info(f"数据库未命中: {normalized_name}")
