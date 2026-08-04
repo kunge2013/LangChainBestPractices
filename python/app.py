@@ -124,7 +124,7 @@ def main():
         ui_config=None,
         webhooks=None,
         studio_url=None,
-        allow_blocking=False,
+        allow_blocking=os.environ.get("LANGGRAPH_DEV_ALLOW_BLOCKING", "0").lower() in ("1", "true", "yes"),
         tunnel=False,
         server_level="DEBUG",
         checkpointer=None,
