@@ -358,5 +358,5 @@ def test_ask_question():
     print(f"\n💬 最终回复: {final_answer}")
 
 
-if __name__ == "__main__":
-    test_ask_question()
+# if __name__ == "__main__":
+#     test_ask_question()
