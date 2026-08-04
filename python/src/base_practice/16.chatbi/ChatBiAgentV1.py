@@ -291,10 +291,19 @@ def validate_result(value: float, metric: str) -> bool:
     return True
 
 
+# [AGC:START] tool=Cc author=fangkun
+# Import ontology expansion tools
+from ontology.tools import logical_layer_expansion, set_global_model
+# [AGC:END]
+
 # ============================ 5. 创建 Agent ============================
+# Set global model for ontology expansion
+set_global_model(model)
+
 tools = [
     extract_entities_enhanced,
-    expand_ontology,
+    logical_layer_expansion,  # 新增：步骤3.3逻辑扩层
+    expand_ontology,           # 保留旧版兼容
     map_metric,
     map_dimension,
     assemble_logical_sql,
