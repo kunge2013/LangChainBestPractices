@@ -23,6 +23,10 @@
 from .database import init_ontology_tables, drop_ontology_tables
 from .init_data import load_sample_ontology_data
 
+# RDF 解析与同步
+from .rdf_parser import RdfOntologyParser
+from .rdf_sync import sync_rdf_to_sqlite, build_mapping_tables_from_rdf, build_concept_keyword_map
+
 # 核心组件
 from .query_engine import OntologyQueryEngine
 from .llm_reasoner import OntologyLLMReasoner
@@ -31,6 +35,7 @@ from .expander import OntologyExpander
 # 工具
 from .normalizer import ConceptNameNormalizer
 from .tools import logical_layer_expansion, set_global_model
+from .chatbi_tools import create_chatbi_tools
 
 # 异常
 OntologyQueryError = OntologyQueryEngine.ConceptNotFoundError
@@ -42,6 +47,12 @@ __all__ = [
     'drop_ontology_tables',
     'load_sample_ontology_data',
 
+    # RDF
+    'RdfOntologyParser',
+    'sync_rdf_to_sqlite',
+    'build_mapping_tables_from_rdf',
+    'build_concept_keyword_map',
+
     # 核心组件
     'OntologyQueryEngine',
     'OntologyLLMReasoner',
@@ -51,6 +62,7 @@ __all__ = [
     'ConceptNameNormalizer',
     'logical_layer_expansion',
     'set_global_model',
+    'create_chatbi_tools',
 
     # 异常
     'OntologyQueryError',

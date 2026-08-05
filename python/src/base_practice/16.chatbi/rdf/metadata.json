@@ -1,0 +1,8 @@
+{
+  "name": "ChatBI – Conversational Business Intelligence",
+  "description": "本体驱动的对话式BI系统：客户、城市、应收账款、业务指标与抽象业务概念的知识图谱。支持从自然语言到SQL的智能转换。",
+  "icon": "🤖",
+  "category": "general",
+  "tags": ["chatbi", "sql", "receivable", "analytics", "conversational-bi"],
+  "author": "fangkun"
+}

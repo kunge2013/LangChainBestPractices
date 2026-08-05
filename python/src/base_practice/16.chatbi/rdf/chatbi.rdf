@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+    xml:base="http://example.org/ontology/chatbi/"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:ont="http://example.org/ontology/chatbi/">
+
+  <owl:Ontology rdf:about="">
+    <rdfs:label>ChatBI – 对话式商务智能</rdfs:label>
+    <rdfs:comment>本体驱动的对话式BI系统：客户、城市、应收账款、指标与业务概念的知识图谱。所有关系和实例均使用中文。</rdfs:comment>
+  </owl:Ontology>
+
+  <!-- ============================================================ -->
+  <!-- Classes (实体类型)                                              -->
+  <!-- ============================================================ -->
+
+  <owl:Class rdf:about="客户">
+    <rdfs:label>客户</rdfs:label>
+    <rdfs:comment>企业客户，拥有应收账款记录。</rdfs:comment>
+    <ont:icon>🏢</ont:icon>
+    <ont:color>#0078D4</ont:color>
+  </owl:Class>
+
+  <owl:Class rdf:about="城市">
+    <rdfs:label>城市</rdfs:label>
+    <rdfs:comment>城市，用于按地域分组和过滤业务数据。</rdfs:comment>
+    <ont:icon>🏙️</ont:icon>
+    <ont:color>#00B7C3</ont:color>
+  </owl:Class>
+
+  <owl:Class rdf:about="应收账款">
+    <rdfs:label>应收账款</rdfs:label>
+    <rdfs:comment>应收账款记录，包含客户、城市、日期和余额。</rdfs:comment>
+    <ont:icon>💰</ont:icon>
+    <ont:color>#FF8C00</ont:color>
+  </owl:Class>
+
+  <owl:Class rdf:about="时间周期">
+    <rdfs:label>时间周期</rdfs:label>
+    <rdfs:comment>时间周期，如本月、上个月、自定义日期范围。</rdfs:comment>
+    <ont:icon>📅</ont:icon>
+    <ont:color>#8764B8</ont:color>
+  </owl:Class>
+
+  <owl:Class rdf:about="业务指标">
+    <rdfs:label>业务指标</rdfs:label>
+    <rdfs:comment>业务指标，如"应收"、"营收"，映射为SQL聚合表达式。</rdfs:comment>
+    <ont:icon>📊</ont:icon>
+    <ont:color>#E3008C</ont:color>
+  </owl:Class>
+
+  <owl:Class rdf:about="业务概念">
+    <rdfs:label>业务概念</rdfs:label>
+    <rdfs:comment>抽象业务概念，如"一线城市"、"华东区"、"字节跳动集团"等。</rdfs:comment>
+    <ont:icon>💡</ont:icon>
+    <ont:color>#107C10</ont:color>
+  </owl:Class>
+
+  <!-- ============================================================ -->
+  <!-- Datatype Properties (数据属性)                                  -->
+  <!-- ============================================================ -->
+
+  <!-- 客户的数据属性 -->
+  <owl:DatatypeProperty rdf:about="客户编号">
+    <rdfs:label>客户编号</rdfs:label>
+    <rdfs:domain rdf:resource="客户"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <ont:propertyType>string</ont:propertyType>
+    <ont:isIdentifier rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</ont:isIdentifier>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="客户名称">
+    <rdfs:label>客户名称</rdfs:label>
+    <rdfs:domain rdf:resource="客户"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <ont:propertyType>string</ont:propertyType>
+  </owl:DatatypeProperty>
+
+  <!-- 城市的数据属性 -->
+  <owl:DatatypeProperty rdf:about="城市编码">
+    <rdfs:label>城市编码</rdfs:label>
+    <rdfs:domain rdf:resource="城市"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <ont:propertyType>string</ont:propertyType>
+    <ont:isIdentifier rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</ont:isIdentifier>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="城市名称">
+    <rdfs:label>城市名称</rdfs:label>
+    <rdfs:domain rdf:resource="城市"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <ont:propertyType>string</ont:propertyType>
+  </owl:DatatypeProperty>
+
+  <!-- 应收账款的数据属性 -->
+  <owl:DatatypeProperty rdf:about="账款编号">
+    <rdfs:label>账款编号</rdfs:label>
+    <rdfs:domain rdf:resource="应收账款"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+    <ont:propertyType>integer</ont:propertyType>
+    <ont:isIdentifier rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</ont:isIdentifier>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="余额">
+    <rdfs:label>余额</rdfs:label>
+    <rdfs:domain rdf:resource="应收账款"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#decimal"/>
+    <ont:propertyType>decimal</ont:propertyType>
+    <ont:unit>CNY</ont:unit>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="日期">
+    <rdfs:label>日期</rdfs:label>
+    <rdfs:domain rdf:resource="应收账款"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <ont:propertyType>date</ont:propertyType>
+  </owl:DatatypeProperty>
+
+  <!-- 时间周期的数据属性 -->
+  <owl:DatatypeProperty rdf:about="周期名称">
+    <rdfs:label>周期名称</rdfs:label>
+    <rdfs:domain rdf:resource="时间周期"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <ont:propertyType>string</ont:propertyType>
+    <ont:isIdentifier rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</ont:isIdentifier>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="开始日期">
+    <rdfs:label>开始日期</rdfs:label>
+    <rdfs:domain rdf:resource="时间周期"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <ont:propertyType>date</ont:propertyType>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="结束日期">
+    <rdfs:label>结束日期</rdfs:label>
+    <rdfs:domain rdf:resource="时间周期"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <ont:propertyType>date</ont:propertyType>
+  </owl:DatatypeProperty>
+
+  <!-- 业务指标的数据属性 -->
+  <owl:DatatypeProperty rdf:about="指标名称">
+    <rdfs:label>指标名称</rdfs:label>
+    <rdfs:domain rdf:resource="业务指标"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <ont:propertyType>string</ont:propertyType>
+    <ont:isIdentifier rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</ont:isIdentifier>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="聚合方式">
+    <rdfs:label>聚合方式</rdfs:label>
+    <rdfs:domain rdf:resource="业务指标"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <ont:propertyType>string</ont:propertyType>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="单位">
+    <rdfs:label>单位</rdfs:label>
+    <rdfs:domain rdf:resource="业务指标"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <ont:propertyType>string</ont:propertyType>
+  </owl:DatatypeProperty>
+
+  <!-- 业务概念的数据属性 -->
+  <owl:DatatypeProperty rdf:about="概念编号">
+    <rdfs:label>概念编号</rdfs:label>
+    <rdfs:domain rdf:resource="业务概念"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <ont:propertyType>string</ont:propertyType>
+    <ont:isIdentifier rdf:datatype="http://www.w3.org/2001/XMLSchema#boolean">true</ont:isIdentifier>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="概念名称">
+    <rdfs:label>概念名称</rdfs:label>
+    <rdfs:domain rdf:resource="业务概念"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <ont:propertyType>string</ont:propertyType>
+  </owl:DatatypeProperty>
+
+  <owl:DatatypeProperty rdf:about="描述">
+    <rdfs:label>描述</rdfs:label>
+    <rdfs:domain rdf:resource="业务概念"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <ont:propertyType>string</ont:propertyType>
+  </owl:DatatypeProperty>
+
+  <!-- ============================================================ -->
+  <!-- Object Properties (对象属性/关系)                               -->
+  <!-- ============================================================ -->
+
+  <owl:ObjectProperty rdf:about="属于城市">
+    <rdfs:label>属于城市</rdfs:label>
+    <rdfs:domain rdf:resource="客户"/>
+    <rdfs:range rdf:resource="城市"/>
+    <rdfs:comment>客户所属的城市。</rdfs:comment>
+    <ont:cardinality>many-to-one</ont:cardinality>
+    <ont:fromEntityId>客户</ont:fromEntityId>
+    <ont:toEntityId>城市</ont:toEntityId>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="拥有账款">
+    <rdfs:label>拥有账款</rdfs:label>
+    <rdfs:domain rdf:resource="客户"/>
+    <rdfs:range rdf:resource="应收账款"/>
+    <rdfs:comment>客户拥有的应收账款记录。</rdfs:comment>
+    <ont:cardinality>one-to-many</ont:cardinality>
+    <ont:fromEntityId>客户</ont:fromEntityId>
+    <ont:toEntityId>应收账款</ont:toEntityId>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="属于周期">
+    <rdfs:label>属于周期</rdfs:label>
+    <rdfs:domain rdf:resource="应收账款"/>
+    <rdfs:range rdf:resource="时间周期"/>
+    <rdfs:comment>应收账款记录所属的时间周期。</rdfs:comment>
+    <ont:cardinality>many-to-one</ont:cardinality>
+    <ont:fromEntityId>应收账款</ont:fromEntityId>
+    <ont:toEntityId>时间周期</ont:toEntityId>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="度量账款">
+    <rdfs:label>度量账款</rdfs:label>
+    <rdfs:domain rdf:resource="业务指标"/>
+    <rdfs:range rdf:resource="应收账款"/>
+    <rdfs:comment>业务指标度量的应收账款对象。</rdfs:comment>
+    <ont:cardinality>one-to-many</ont:cardinality>
+    <ont:fromEntityId>业务指标</ont:fromEntityId>
+    <ont:toEntityId>应收账款</ont:toEntityId>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="包含城市">
+    <rdfs:label>包含城市</rdfs:label>
+    <rdfs:domain rdf:resource="业务概念"/>
+    <rdfs:range rdf:resource="城市"/>
+    <rdfs:comment>业务概念包含的城市（如"一线城市"包含上海、北京等）。</rdfs:comment>
+    <ont:cardinality>many-to-many</ont:cardinality>
+    <ont:fromEntityId>业务概念</ont:fromEntityId>
+    <ont:toEntityId>城市</ont:toEntityId>
+  </owl:ObjectProperty>
+
+  <owl:ObjectProperty rdf:about="包含客户">
+    <rdfs:label>包含客户</rdfs:label>
+    <rdfs:domain rdf:resource="业务概念"/>
+    <rdfs:range rdf:resource="客户"/>
+    <rdfs:comment>业务概念包含的客户（如"字节跳动集团"包含其下属客户）。</rdfs:comment>
+    <ont:cardinality>many-to-many</ont:cardinality>
+    <ont:fromEntityId>业务概念</ont:fromEntityId>
+    <ont:toEntityId>客户</ont:toEntityId>
+  </owl:ObjectProperty>
+
+  <!-- ============================================================ -->
+  <!-- Individuals (实例)                                             -->
+  <!-- ============================================================ -->
+
+  <!-- ── 城市实例 ── -->
+  <owl:NamedIndividual rdf:about="上海">
+    <rdf:type rdf:resource="城市"/>
+    <城市名称>上海</城市名称>
+    <城市编码>021</城市编码>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="北京">
+    <rdf:type rdf:resource="城市"/>
+    <城市名称>北京</城市名称>
+    <城市编码>010</城市编码>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="广州">
+    <rdf:type rdf:resource="城市"/>
+    <城市名称>广州</城市名称>
+    <城市编码>020</城市编码>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="深圳">
+    <rdf:type rdf:resource="城市"/>
+    <城市名称>深圳</城市名称>
+    <城市编码>0755</城市编码>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="杭州">
+    <rdf:type rdf:resource="城市"/>
+    <城市名称>杭州</城市名称>
+    <城市编码>0571</城市编码>
+  </owl:NamedIndividual>
+
+  <!-- ── 客户实例 ── -->
+  <owl:NamedIndividual rdf:about="客户_上海_001">
+    <rdf:type rdf:resource="客户"/>
+    <客户编号>CUST_SH_001</客户编号>
+    <客户名称>上海贸易公司</客户名称>
+    <属于城市 rdf:resource="上海"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="客户_北京_002">
+    <rdf:type rdf:resource="客户"/>
+    <客户编号>CUST_BJ_002</客户编号>
+    <客户名称>北京科技公司</客户名称>
+    <属于城市 rdf:resource="北京"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="客户_广州_003">
+    <rdf:type rdf:resource="客户"/>
+    <客户编号>CUST_GZ_003</客户编号>
+    <客户名称>广州制造公司</客户名称>
+    <属于城市 rdf:resource="广州"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="客户_深圳_004">
+    <rdf:type rdf:resource="客户"/>
+    <客户编号>CUST_SZ_004</客户编号>
+    <客户名称>深圳创新公司</客户名称>
+    <属于城市 rdf:resource="深圳"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="客户_杭州_005">
+    <rdf:type rdf:resource="客户"/>
+    <客户编号>CUST_HZ_005</客户编号>
+    <客户名称>杭州互联网公司</客户名称>
+    <属于城市 rdf:resource="杭州"/>
+  </owl:NamedIndividual>
+
+  <!-- ── 应收账款实例 ── -->
+  <owl:NamedIndividual rdf:about="账款_001">
+    <rdf:type rdf:resource="应收账款"/>
+    <账款编号 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">1</账款编号>
+    <余额 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">18234500.00</余额>
+    <日期 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-07-15</日期>
+    <属于城市 rdf:resource="上海"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="账款_002">
+    <rdf:type rdf:resource="应收账款"/>
+    <账款编号 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">2</账款编号>
+    <余额 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12456700.00</余额>
+    <日期 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-07-20</日期>
+    <属于城市 rdf:resource="上海"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="账款_003">
+    <rdf:type rdf:resource="应收账款"/>
+    <账款编号 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">3</账款编号>
+    <余额 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">15678900.00</余额>
+    <日期 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-07-10</日期>
+    <属于城市 rdf:resource="北京"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="账款_004">
+    <rdf:type rdf:resource="应收账款"/>
+    <账款编号 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">4</账款编号>
+    <余额 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">18765400.00</余额>
+    <日期 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-07-25</日期>
+    <属于城市 rdf:resource="北京"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="账款_005">
+    <rdf:type rdf:resource="应收账款"/>
+    <账款编号 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">5</账款编号>
+    <余额 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">12456000.00</余额>
+    <日期 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-07-05</日期>
+    <属于城市 rdf:resource="广州"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="账款_006">
+    <rdf:type rdf:resource="应收账款"/>
+    <账款编号 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">6</账款编号>
+    <余额 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">14567000.00</余额>
+    <日期 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-07-18</日期>
+    <属于城市 rdf:resource="广州"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="账款_007">
+    <rdf:type rdf:resource="应收账款"/>
+    <账款编号 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">7</账款编号>
+    <余额 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">16789000.00</余额>
+    <日期 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-07-12</日期>
+    <属于城市 rdf:resource="深圳"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="账款_008">
+    <rdf:type rdf:resource="应收账款"/>
+    <账款编号 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">8</账款编号>
+    <余额 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">18923000.00</余额>
+    <日期 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-07-22</日期>
+    <属于城市 rdf:resource="深圳"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="账款_009">
+    <rdf:type rdf:resource="应收账款"/>
+    <账款编号 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">9</账款编号>
+    <余额 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">13456000.00</余额>
+    <日期 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-07-08</日期>
+    <属于城市 rdf:resource="杭州"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="账款_010">
+    <rdf:type rdf:resource="应收账款"/>
+    <账款编号 rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">10</账款编号>
+    <余额 rdf:datatype="http://www.w3.org/2001/XMLSchema#decimal">15678000.00</余额>
+    <日期 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-07-19</日期>
+    <属于城市 rdf:resource="杭州"/>
+  </owl:NamedIndividual>
+
+  <!-- ── 时间周期实例 ── -->
+  <owl:NamedIndividual rdf:about="2026年7月">
+    <rdf:type rdf:resource="时间周期"/>
+    <周期名称>2026年7月</周期名称>
+    <开始日期 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-07-01</开始日期>
+    <结束日期 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-07-31</结束日期>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="2026年上半年">
+    <rdf:type rdf:resource="时间周期"/>
+    <周期名称>2026年上半年</周期名称>
+    <开始日期 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-01-01</开始日期>
+    <结束日期 rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2026-06-30</结束日期>
+  </owl:NamedIndividual>
+
+  <!-- ── 业务指标实例 ── -->
+  <owl:NamedIndividual rdf:about="应收指标">
+    <rdf:type rdf:resource="业务指标"/>
+    <指标名称>应收</指标名称>
+    <聚合方式>SUM(balance)</聚合方式>
+    <单位>CNY</单位>
+    <度量账款 rdf:resource="账款_001"/>
+    <度量账款 rdf:resource="账款_002"/>
+    <度量账款 rdf:resource="账款_003"/>
+    <度量账款 rdf:resource="账款_004"/>
+    <度量账款 rdf:resource="账款_005"/>
+    <度量账款 rdf:resource="账款_006"/>
+    <度量账款 rdf:resource="账款_007"/>
+    <度量账款 rdf:resource="账款_008"/>
+    <度量账款 rdf:resource="账款_009"/>
+    <度量账款 rdf:resource="账款_010"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="营收指标">
+    <rdf:type rdf:resource="业务指标"/>
+    <指标名称>营收</指标名称>
+    <聚合方式>SUM(balance)</聚合方式>
+    <单位>CNY</单位>
+  </owl:NamedIndividual>
+
+  <!-- ── 业务概念实例 ── -->
+  <owl:NamedIndividual rdf:about="一线城市">
+    <rdf:type rdf:resource="业务概念"/>
+    <概念编号>tier1_cities</概念编号>
+    <概念名称>一线城市</概念名称>
+    <描述>中国一线发达城市：上海、北京、广州、深圳。</描述>
+    <包含城市 rdf:resource="上海"/>
+    <包含城市 rdf:resource="北京"/>
+    <包含城市 rdf:resource="广州"/>
+    <包含城市 rdf:resource="深圳"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="华东区">
+    <rdf:type rdf:resource="业务概念"/>
+    <概念编号>east_china</概念编号>
+    <概念名称>华东区</概念名称>
+    <描述>华东地区：上海、杭州。</描述>
+    <包含城市 rdf:resource="上海"/>
+    <包含城市 rdf:resource="杭州"/>
+  </owl:NamedIndividual>
+
+  <owl:NamedIndividual rdf:about="华中区">
+    <rdf:type rdf:resource="业务概念"/>
+    <概念编号>central_china</概念编号>
+    <概念名称>华中区</概念名称>
+    <描述>华中地区。</描述>
+  </owl:NamedIndividual>
+
+</rdf:RDF>

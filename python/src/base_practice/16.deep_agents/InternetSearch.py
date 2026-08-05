@@ -98,14 +98,14 @@ agent = create_deep_agent(
     system_prompt=research_instructions,
 )
 
-# 调用代理
-result = agent.invoke({
-    "messages": [{
-        "role": "user",
-        "content": "武汉在那个省？检索一下，请详细回答并说明你的信息来源。"
-    }]
-})
-
-if 'messages' in result:
-    for i, msg in enumerate(result['messages']):
-        msg.pretty_print()
+# # 调用代理
+# result = agent.invoke({
+#     "messages": [{
+#         "role": "user",
+#         "content": "武汉在那个省？检索一下，请详细回答并说明你的信息来源。"
+#     }]
+# })
+#
+# if 'messages' in result:
+#     for i, msg in enumerate(result['messages']):
+#         msg.pretty_print()

@@ -9,7 +9,7 @@
     "pg_short_term_memory": "./src/chains/PgShortTermMemory.py:agent",
     "handoff_agent": "./src/base_practice/15.multi-agent/handoff_agent.py:main_agent",
     "search_agent": "./src/base_practice/16.deep_agents/InternetSearch.py:agent",
-    "ChatBiAgent": "./src/base_practice/16.chatbi/ChatBiAgentOntology.py:agent"
+    "ChatBiAgent": "./src/base_practice/16.chatbi/ChatBiAgentOntologyRdf.py:agent"
   },
   "env": ".env"
 }
