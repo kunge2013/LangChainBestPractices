@@ -34,6 +34,7 @@ from ontology.tools import logical_layer_expansion, set_global_model
 
 # 异常
 OntologyQueryError = OntologyQueryEngine.ConceptNotFoundError
+ConceptNotFoundError = OntologyExpander.ConceptNotFoundError
 
 __all__ = [
     # 数据库
@@ -53,4 +54,5 @@ __all__ = [
 
     # 异常
     'OntologyQueryError',
+    'ConceptNotFoundError',
 ]

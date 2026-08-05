@@ -15,6 +15,7 @@ def init_ontology_tables(db_path: str) -> None:
 
     创建 ontology_nodes 和 ontology_edges 表以及必要的索引
     """
+    # [AGC:START] tool=Cc author=fangkun
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
@@ -67,6 +68,7 @@ def init_ontology_tables(db_path: str) -> None:
         raise
     finally:
         conn.close()
+    # [AGC:END]
 
 
 def drop_ontology_tables(db_path: str) -> None:
@@ -75,6 +77,7 @@ def drop_ontology_tables(db_path: str) -> None:
 
     用于测试清理或重建
     """
+    # [AGC:START] tool=Cc author=fangkun
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
 
@@ -92,3 +95,4 @@ def drop_ontology_tables(db_path: str) -> None:
         raise
     finally:
         conn.close()
+    # [AGC:END]

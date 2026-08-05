@@ -62,12 +62,14 @@ class ConceptNameNormalizer:
         if concept_lower in cls.ALIAS_MAP:
             return cls.ALIAS_MAP[concept_lower]
 
-        # 遍历别名映射，尝试模糊匹配
-        for alias, canonical in cls.ALIAS_MAP.items():
-            alias_lower = alias.lower()
-            # 检查是否包含别名或别名包含它
-            if concept_lower in alias_lower or alias_lower in concept_lower:
-                return canonical
+        # 最小长度保护：短字符串的模糊匹配容易产生误判
+        if len(concept_lower) >= 4:
+            # 遍历别名映射，尝试模糊匹配
+            for alias, canonical in cls.ALIAS_MAP.items():
+                alias_lower = alias.lower()
+                # 检查是否包含别名或别名包含它
+                if concept_lower in alias_lower or alias_lower in concept_lower:
+                    return canonical
 
         # 没有匹配，返回原始名称的小写形式
         return concept_lower

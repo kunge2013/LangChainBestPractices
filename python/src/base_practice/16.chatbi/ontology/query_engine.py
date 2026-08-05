@@ -68,6 +68,11 @@ class OntologyQueryEngine:
             if not concept_row:
                 raise self.ConceptNotFoundError(f"概念 '{concept_name}' 未在数据库中找到")
 
+            # 验证 max_level 参数安全
+            if max_level is not None:
+                if not isinstance(max_level, int) or max_level <= 0:
+                    raise ValueError(f"max_level 必须是正整数，当前值: {max_level}")
+
             # 构建递归CTE查询
             level_filter = f"AND expand.level <= {max_level}" if max_level else ""
 
@@ -133,9 +138,8 @@ class OntologyQueryEngine:
                 result = {}
                 for row in rows:
                     attrs = json.loads(row[2]) if row[2] else {}
-                    code = attrs.get("code")
-                    if code:
-                        result[row[0]] = code
+                    code = attrs.get("code", "")
+                    result[row[0]] = code
                 return result
             else:
                 raise ValueError(f"不支持的返回类型: {return_type}")
