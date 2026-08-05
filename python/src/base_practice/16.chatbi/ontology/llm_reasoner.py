@@ -93,7 +93,19 @@ class OntologyLLMReasoner:
 
             # 解析JSON响应
             try:
-                result = json.loads(response_text)
+                # Strip markdown code blocks if present (```json ... ```)
+                cleaned_text = response_text
+                if cleaned_text.startswith("```"):
+                    # Remove opening ```json or ```
+                    first_newline = cleaned_text.find("\n")
+                    if first_newline != -1:
+                        cleaned_text = cleaned_text[first_newline + 1:]
+                    # Remove closing ```
+                    if cleaned_text.endswith("```"):
+                        cleaned_text = cleaned_text[:-3]
+                    cleaned_text = cleaned_text.strip()
+
+                result = json.loads(cleaned_text)
                 instances = result.get("instances", [])
                 confidence = result.get("confidence", 0.0)
 

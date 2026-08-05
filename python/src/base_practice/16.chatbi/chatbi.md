@@ -3,7 +3,8 @@
 ---
 
 ### 源码文件
-[ChatBiAgentV1.py](ChatBiAgentV1.py)
+
+![ChatBiAgentV1.py](ChatBiAgentV1.py)
 
 ### 🧭 完整架构流程图（含存储层）
 

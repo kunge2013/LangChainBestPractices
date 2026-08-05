@@ -8,7 +8,7 @@ from typing import List
 from langchain_core.tools import tool
 import os
 
-from ontology.expander import OntologyExpander
+from .expander import OntologyExpander
 
 # Global configuration (read from environment variables or config files)
 DB_PATH = os.environ.get("ONTOLOGY_DB_PATH", "chatbi.db")

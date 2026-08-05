@@ -9,9 +9,9 @@ import json
 import logging
 from typing import List, Dict, Optional
 
-from ontology.query_engine import OntologyQueryEngine
-from ontology.llm_reasoner import OntologyLLMReasoner
-from ontology.normalizer import ConceptNameNormalizer
+from .query_engine import OntologyQueryEngine
+from .llm_reasoner import OntologyLLMReasoner
+from .normalizer import ConceptNameNormalizer
 
 logger = logging.getLogger(__name__)
 

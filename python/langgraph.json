@@ -2,14 +2,14 @@
   "python_version": "3.12",
   "dependencies": [
     ".",
-    "./src/base_practice/15.multi-agent/*"
+    "./src/base_practice/*"
   ],
   "graphs": {
     "data_analysis": "./src/data_analysis/agent.py:agent",
     "pg_short_term_memory": "./src/chains/PgShortTermMemory.py:agent",
     "handoff_agent": "./src/base_practice/15.multi-agent/handoff_agent.py:main_agent",
     "search_agent": "./src/base_practice/16.deep_agents/InternetSearch.py:agent",
-    "ChatBiAgent": "./src/base_practice/16.chatbi/ChatBiAgent.py:agent"
+    "ChatBiAgent": "./src/base_practice/16.chatbi/ChatBiAgentOntology.py:agent"
   },
   "env": ".env"
 }

@@ -20,17 +20,17 @@
 """
 
 # 数据库
-from ontology.database import init_ontology_tables, drop_ontology_tables
-from ontology.init_data import load_sample_ontology_data
+from .database import init_ontology_tables, drop_ontology_tables
+from .init_data import load_sample_ontology_data
 
 # 核心组件
-from ontology.query_engine import OntologyQueryEngine
-from ontology.llm_reasoner import OntologyLLMReasoner
-from ontology.expander import OntologyExpander
+from .query_engine import OntologyQueryEngine
+from .llm_reasoner import OntologyLLMReasoner
+from .expander import OntologyExpander
 
 # 工具
-from ontology.normalizer import ConceptNameNormalizer
-from ontology.tools import logical_layer_expansion, set_global_model
+from .normalizer import ConceptNameNormalizer
+from .tools import logical_layer_expansion, set_global_model
 
 # 异常
 OntologyQueryError = OntologyQueryEngine.ConceptNotFoundError
