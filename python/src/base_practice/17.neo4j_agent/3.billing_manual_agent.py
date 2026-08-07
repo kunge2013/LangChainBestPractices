@@ -84,6 +84,7 @@ class Config:
 
     # 检索
     search_k: int = 3
+    image_base_url: str = field(default_factory=lambda: os.environ.get("IMAGE_BASE_URL", "http://localhost:2024"))
 
     # LLM (OpenAI 兼容协议)
     openai_model: str = field(default_factory=lambda: os.environ.get("OPENAI_MODEL", "qwen3.5-plus"))
@@ -112,6 +113,13 @@ class Config:
             "temperature": self.openai_temperature,
             "max_tokens": self.openai_max_tokens,
         }
+
+    def image_to_html(self, image_path: str, alt: str = "") -> str:
+        """将图片路径转为 HTML img 标签"""
+        if not image_path:
+            return ""
+        filename = os.path.basename(image_path)
+        return f'<img src="{self.image_base_url}/{filename}" alt="{alt}" />'
 
 
 # ======================== 数据模型 ========================
@@ -487,9 +495,10 @@ class KnowledgeSearcher(BaseTool):
                     section.append(f"  图{j + 1}: {desc}")
 
             if image_paths:
-                section.append("\n相关图片路径:")
-                for path in image_paths:
-                    section.append(f"  {path}")
+                section.append("\n相关图片:")
+                for j, path in enumerate(image_paths):
+                    desc = image_descs[j] if j < len(image_descs) else ""
+                    section.append(f"  {self.config.image_to_html(path, alt=desc)}")
 
             output_parts.append("\n".join(section))
 
@@ -573,7 +582,7 @@ class GetSectionImages(BaseTool):
         if all_images:
             output.append(f"\n### 图片 ({len(all_images)} 张)")
             for path in sorted(all_images):
-                output.append(f"- {path}")
+                output.append(self.config.image_to_html(path, alt=os.path.basename(path)))
 
         return "\n\n".join(output)
 
@@ -615,8 +624,9 @@ class BillingAgent:
 ### 概念/定义问题
 - 直接文字说明，无需流程图
 
-## 图片路径
-图片存储在 `output/images/` 目录下，回答时请给出完整的图片路径。
+## 图片格式
+图片以 HTML img 标签形式返回，如 `<img src="http://localhost:2024/img_0.png" alt="描述" />`。
+回答时请直接输出这些 img 标签，让 Markdown 渲染器展示图片。
 请用中文回答所有问题。"""
 
     def __init__(self, config: Config, db: Neo4jVector):
