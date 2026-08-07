@@ -1,6 +1,6 @@
 # [AGC:FILE] tool=Cc author=fangkun date=2026-08-07
 """
-政企计费账务系统操作手册 - 多模态知识检索 Agent
+操作手册 - 多模态知识检索 Agent
 
 基于 .docx 操作手册，提取文本和图片，用 qwen VL 模型生成图片描述，
 存入 Neo4j 向量库，通过 deepagents 创建可自主检索的操作助手。
@@ -58,7 +58,7 @@ class Config:
     # 文档路径
     billing_manual_path: str = field(default_factory=lambda: os.path.join(
         os.path.dirname(__file__),
-        "中国电信集团政企计费账务系统操作手册-客户经理分册 -修订-20260720.docx",
+        "操作手册.docx",
     ))
     images_output_dir: str = field(default_factory=lambda: os.path.join(
         os.path.dirname(__file__), "output", "images"
@@ -471,7 +471,7 @@ class KnowledgeSearcher(BaseTool):
 
     name: str = "search_knowledge"
     description: str = (
-        "检索政企计费账务系统操作手册的知识库。返回相关文本内容、所属章节和关联图片的路径。"
+        "检索操作手册的知识库。返回相关文本内容、所属章节和关联图片的路径。"
         "参数 query 是检索关键词或问题。"
         "如果要查询某个章节的所有内容，使用另一个工具 get_section_images。"
     )
