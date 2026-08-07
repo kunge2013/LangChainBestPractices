@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&amp;display=swap');
+    text { font-family: 'Noto Sans SC', 'PingFang SC', 'Segoe UI', sans-serif; }
+  </style>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e293b" stroke-width="0.5"/>
+    </pattern>
+    <marker id="arrow-cyan" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#22d3ee"/>
+    </marker>
+  </defs>
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#0f172a"/>
+  <rect width="100%" height="100%" fill="url(#grid)"/>
+
+  <!-- Title block -->
+  <text x="30" y="28" fill="white" font-size="16" font-weight="700">Before / After: 文件拆分</text>
+  <text x="30" y="44" fill="#94a3b8" font-size="9">单一文件 779 行 → 8 个独立模块文件</text>
+
+  <!-- Divider line -->
+  <line x1="450" y1="55" x2="450" y2="440" stroke="#334155" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- BEFORE: LEFT HALF -->
+  <rect x="30" y="70" width="390" height="370" rx="12" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="8,4" opacity="0.6"/>
+  <rect x="42" y="78" width="140" height="22" rx="4" fill="rgba(136,19,55,0.6)" stroke="#ef4444" stroke-width="1"/>
+  <text x="112" y="94" fill="#ef4444" font-size="10" font-weight="700" text-anchor="middle">BEFORE · 单一文件</text>
+
+  <!-- Big red file -->
+  <g transform="translate(55, 115)">
+    <rect x="0" y="0" width="340" height="310" rx="8" fill="#0f172a"/>
+    <rect x="0" y="0" width="340" height="310" rx="8" fill="rgba(136,19,55,0.15)" stroke="#ef4444" stroke-width="2"/>
+    <!-- File header -->
+    <text x="170" y="22" fill="#ef4444" font-size="10" font-weight="600" text-anchor="middle">3.billing_manual_agent.py</text>
+    <text x="170" y="36" fill="#fb7185" font-size="8" text-anchor="middle">779 lines · 8 classes · 0 分隔</text>
+
+    <!-- Cramped boxes inside -->
+    <!-- Config -->
+    <rect x="10" y="50" width="95" height="42" rx="4" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1"/>
+    <text x="57" y="66" fill="white" font-size="9" font-weight="600" text-anchor="middle">Config</text>
+    <text x="57" y="80" fill="#94a3b8" font-size="7" text-anchor="middle">~130 lines</text>
+
+    <!-- DocxParser -->
+    <rect x="115" y="50" width="105" height="42" rx="4" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1"/>
+    <text x="167" y="66" fill="white" font-size="9" font-weight="600" text-anchor="middle">DocxParser</text>
+    <text x="167" y="80" fill="#94a3b8" font-size="7" text-anchor="middle">~150 lines</text>
+
+    <!-- ImageDescriber -->
+    <rect x="230" y="50" width="100" height="42" rx="4" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1"/>
+    <text x="280" y="66" fill="white" font-size="9" font-weight="600" text-anchor="middle">ImageDescriber</text>
+    <text x="280" y="80" fill="#94a3b8" font-size="7" text-anchor="middle">~60 lines</text>
+
+    <!-- VectorStoreBuilder -->
+    <rect x="10" y="102" width="120" height="42" rx="4" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1"/>
+    <text x="70" y="118" fill="white" font-size="9" font-weight="600" text-anchor="middle">VectorStoreBuilder</text>
+    <text x="70" y="132" fill="#94a3b8" font-size="7" text-anchor="middle">~100 lines</text>
+
+    <!-- KnowledgeSearcher -->
+    <rect x="140" y="102" width="110" height="42" rx="4" fill="rgba(251,146,60,0.3)" stroke="#fb923c" stroke-width="1"/>
+    <text x="195" y="118" fill="white" font-size="9" font-weight="600" text-anchor="middle">KnowledgeSearcher</text>
+    <text x="195" y="132" fill="#94a3b8" font-size="7" text-anchor="middle">~45 lines</text>
+
+    <!-- GetSectionImages -->
+    <rect x="260" y="102" width="70" height="42" rx="4" fill="rgba(251,146,60,0.3)" stroke="#fb923c" stroke-width="1"/>
+    <text x="295" y="114" fill="white" font-size="8" font-weight="600" text-anchor="middle">GetSection</text>
+    <text x="295" y="126" fill="white" font-size="8" font-weight="600" text-anchor="middle">Images</text>
+    <text x="295" y="138" fill="#94a3b8" font-size="7" text-anchor="middle">~80 lines</text>
+
+    <!-- BillingAgent -->
+    <rect x="10" y="154" width="110" height="42" rx="4" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1"/>
+    <text x="65" y="170" fill="white" font-size="9" font-weight="600" text-anchor="middle">BillingAgent</text>
+    <text x="65" y="184" fill="#94a3b8" font-size="7" text-anchor="middle">~50 lines</text>
+
+    <!-- BillingManualPipeline -->
+    <rect x="130" y="154" width="120" height="42" rx="4" fill="rgba(136,19,55,0.3)" stroke="#fb7185" stroke-width="1"/>
+    <text x="190" y="166" fill="white" font-size="8" font-weight="600" text-anchor="middle">BillingManual</text>
+    <text x="190" y="178" fill="white" font-size="8" font-weight="600" text-anchor="middle">Pipeline</text>
+    <text x="190" y="190" fill="#94a3b8" font-size="7" text-anchor="middle">~50 lines</text>
+
+    <!-- build_agent() + CLI -->
+    <rect x="260" y="154" width="70" height="42" rx="4" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1"/>
+    <text x="295" y="170" fill="white" font-size="8" font-weight="600" text-anchor="middle">build_</text>
+    <text x="295" y="182" fill="white" font-size="8" font-weight="600" text-anchor="middle">agent()</text>
+    <text x="295" y="194" fill="#94a3b8" font-size="7" text-anchor="middle">~25 lines</text>
+
+    <!-- Warning note -->
+    <rect x="10" y="210" width="320" height="25" rx="4" fill="rgba(136,19,55,0.2)" stroke="#ef4444" stroke-width="1" stroke-dasharray="3,2"/>
+    <text x="170" y="227" fill="#ef4444" font-size="8" font-weight="500" text-anchor="middle">AI 导航性差 · 修改易干扰 · 无法独立测试</text>
+
+    <!-- Data flow chart section (bottom of before) -->
+    <text x="170" y="260" fill="#94a3b8" font-size="8" text-anchor="middle" opacity="0.6">↓ 其他代码: 日志配置、数据模型、CLI入口(已注释) ↓</text>
+  </g>
+
+  <!-- AFTER: RIGHT HALF -->
+  <rect x="480" y="70" width="390" height="370" rx="12" fill="none" stroke="#059669" stroke-width="1.5" stroke-dasharray="8,4" opacity="0.6"/>
+  <rect x="492" y="78" width="140" height="22" rx="4" fill="rgba(6,78,59,0.4)" stroke="#059669" stroke-width="1"/>
+  <text x="562" y="94" fill="#059669" font-size="10" font-weight="700" text-anchor="middle">AFTER · 8 个独立模块</text>
+
+  <!-- 8 neat files in 2x4 grid -->
+  <!-- Row 1 -->
+  <g transform="translate(500, 115)">
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="#0f172a"/>
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="rgba(120,53,15,0.3)" stroke="#fbbf24" stroke-width="1.2"/>
+    <text x="80" y="20" fill="white" font-size="10" font-weight="600" text-anchor="middle">config.py</text>
+    <text x="80" y="36" fill="#fbbf24" font-size="8" text-anchor="middle">~60 lines</text>
+    <text x="80" y="52" fill="#94a3b8" font-size="8" text-anchor="middle">配置管理</text>
+    <text x="80" y="65" fill="#64748b" font-size="7" text-anchor="middle">Neo4j / LLM / 图片服务</text>
+  </g>
+
+  <g transform="translate(690, 115)">
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="#0f172a"/>
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="rgba(8,51,68,0.4)" stroke="#22d3ee" stroke-width="1.2"/>
+    <text x="80" y="20" fill="white" font-size="10" font-weight="600" text-anchor="middle">docx_parser.py</text>
+    <text x="80" y="36" fill="#22d3ee" font-size="8" text-anchor="middle">~150 lines</text>
+    <text x="80" y="52" fill="#94a3b8" font-size="8" text-anchor="middle">文档解析 · 文本+图片提取</text>
+    <text x="80" y="65" fill="#64748b" font-size="7" text-anchor="middle">TextElement / ImageElement</text>
+  </g>
+
+  <!-- Row 2 -->
+  <g transform="translate(500, 197)">
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="#0f172a"/>
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="rgba(6,78,59,0.4)" stroke="#34d399" stroke-width="1.2"/>
+    <text x="80" y="20" fill="white" font-size="10" font-weight="600" text-anchor="middle">image_describer.py</text>
+    <text x="80" y="36" fill="#34d399" font-size="8" text-anchor="middle">~60 lines</text>
+    <text x="80" y="52" fill="#94a3b8" font-size="8" text-anchor="middle">qwen VL · 批量图片描述</text>
+    <text x="80" y="65" fill="#64748b" font-size="7" text-anchor="middle">重试 + 指数退避</text>
+  </g>
+
+  <g transform="translate(690, 197)">
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="#0f172a"/>
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.2"/>
+    <text x="80" y="20" fill="white" font-size="10" font-weight="600" text-anchor="middle">vector_store.py</text>
+    <text x="80" y="36" fill="#a78bfa" font-size="8" text-anchor="middle">~100 lines</text>
+    <text x="80" y="52" fill="#94a3b8" font-size="8" text-anchor="middle">向量库构建 · 文档分块</text>
+    <text x="80" y="65" fill="#64748b" font-size="7" text-anchor="middle">LangChain Documents</text>
+  </g>
+
+  <!-- Row 3 -->
+  <g transform="translate(500, 279)">
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="#0f172a"/>
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="rgba(251,146,60,0.3)" stroke="#fb923c" stroke-width="1.2"/>
+    <text x="80" y="20" fill="white" font-size="10" font-weight="600" text-anchor="middle">tools.py</text>
+    <text x="80" y="36" fill="#fb923c" font-size="8" text-anchor="middle">~130 lines</text>
+    <text x="80" y="52" fill="#94a3b8" font-size="8" text-anchor="middle">LangChain 检索工具</text>
+    <text x="80" y="65" fill="#64748b" font-size="7" text-anchor="middle">KnowledgeSearcher / GetSection</text>
+  </g>
+
+  <g transform="translate(690, 279)">
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="#0f172a"/>
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="rgba(136,19,55,0.4)" stroke="#fb7185" stroke-width="1.2"/>
+    <text x="80" y="20" fill="white" font-size="10" font-weight="600" text-anchor="middle">agent.py</text>
+    <text x="80" y="36" fill="#fb7185" font-size="8" text-anchor="middle">~50 lines</text>
+    <text x="80" y="52" fill="#94a3b8" font-size="8" text-anchor="middle">BillingAgent · Deep Agent 创建</text>
+    <text x="80" y="65" fill="#64748b" font-size="7" text-anchor="middle">System Prompt + Tools</text>
+  </g>
+
+  <!-- Row 4 -->
+  <g transform="translate(500, 361)">
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="#0f172a"/>
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="rgba(136,19,55,0.3)" stroke="#fb7185" stroke-width="1.2"/>
+    <text x="80" y="20" fill="white" font-size="10" font-weight="600" text-anchor="middle">pipeline.py</text>
+    <text x="80" y="36" fill="#fb7185" font-size="8" text-anchor="middle">~50 lines</text>
+    <text x="80" y="52" fill="#94a3b8" font-size="8" text-anchor="middle">主流程编排 · 4 阶段</text>
+    <text x="80" y="65" fill="#64748b" font-size="7" text-anchor="middle">解析→描述→建库→创建Agent</text>
+  </g>
+
+  <g transform="translate(690, 361)">
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="#0f172a"/>
+    <rect x="0" y="0" width="160" height="72" rx="6" fill="rgba(76,29,149,0.4)" stroke="#a78bfa" stroke-width="1.2"/>
+    <text x="80" y="20" fill="white" font-size="10" font-weight="600" text-anchor="middle">api.py</text>
+    <text x="80" y="36" fill="#a78bfa" font-size="8" text-anchor="middle">~25 lines</text>
+    <text x="80" y="52" fill="#94a3b8" font-size="8" text-anchor="middle">LangGraph API 入口</text>
+    <text x="80" y="65" fill="#64748b" font-size="7" text-anchor="middle">build_agent() · CLI</text>
+  </g>
+
+  <!-- Success note -->
+  <rect x="500" y="443" width="350" height="22" rx="4" fill="rgba(6,78,59,0.2)" stroke="#059669" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="675" y="458" fill="#059669" font-size="8" font-weight="500" text-anchor="middle">职责清晰 · 独立测试 · 高内聚低耦合</text>
+
+  <!-- Center arrow: BEFORE → AFTER -->
+  <g transform="translate(430, 230)">
+    <polygon points="0,15 25,0 25,10 40,10 40,20 25,20 25,30" fill="#22d3ee"/>
+    <text x="20" y="48" fill="#22d3ee" font-size="9" font-weight="700" text-anchor="middle">拆分</text>
+    <text x="20" y="60" fill="#94a3b8" font-size="7" text-anchor="middle">Refactor</text>
+  </g>
+</svg>

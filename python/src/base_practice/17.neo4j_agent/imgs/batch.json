@@ -1,0 +1,37 @@
+{
+  "tasks": [
+    {
+      "id": "illustration-01",
+      "promptFiles": ["D:/github.io/LangChainBestPractices/python/src/base_practice/17.neo4j_agent/imgs/prompts/01-infographic-business-flow.md"],
+      "image": "D:/github.io/LangChainBestPractices/python/src/base_practice/17.neo4j_agent/imgs/01-infographic-business-flow.png",
+      "provider": "dashscope",
+      "ar": "16:9",
+      "quality": "2k"
+    },
+    {
+      "id": "illustration-02",
+      "promptFiles": ["D:/github.io/LangChainBestPractices/python/src/base_practice/17.neo4j_agent/imgs/prompts/02-framework-module-dependencies.md"],
+      "image": "D:/github.io/LangChainBestPractices/python/src/base_practice/17.neo4j_agent/imgs/02-framework-module-dependencies.png",
+      "provider": "dashscope",
+      "ar": "16:9",
+      "quality": "2k"
+    },
+    {
+      "id": "illustration-03",
+      "promptFiles": ["D:/github.io/LangChainBestPractices/python/src/base_practice/17.neo4j_agent/imgs/prompts/03-comparison-file-split.md"],
+      "image": "D:/github.io/LangChainBestPractices/python/src/base_practice/17.neo4j_agent/imgs/03-comparison-file-split.png",
+      "provider": "dashscope",
+      "ar": "16:9",
+      "quality": "2k"
+    },
+    {
+      "id": "illustration-04",
+      "promptFiles": ["D:/github.io/LangChainBestPractices/python/src/base_practice/17.neo4j_agent/imgs/prompts/04-comparison-neo4j-adapter.md"],
+      "image": "D:/github.io/LangChainBestPractices/python/src/base_practice/17.neo4j_agent/imgs/04-comparison-neo4j-adapter.png",
+      "provider": "dashscope",
+      "ar": "16:9",
+      "quality": "2k"
+    }
+  ],
+  "jobs": 2
+}
