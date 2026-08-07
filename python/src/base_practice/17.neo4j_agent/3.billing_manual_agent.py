@@ -119,11 +119,12 @@ class Config:
         if not image_path or not os.path.exists(image_path):
             return ""
         try:
-            with open(image_path, "rb") as f:
-                b64 = base64.b64encode(f.read()).decode("utf-8")
-            ext = os.path.splitext(image_path)[1].lstrip(".").lower()
-            mime = f"image/{ext}" if ext in ("png", "jpeg", "jpg", "gif", "webp", "svg") else "image/png"
-            return f'<img src="data:{mime};base64,{b64}" alt="{alt}" />'
+            # with open(image_path, "rb") as f:
+            #     b64 = base64.b64encode(f.read()).decode("utf-8")
+            # ext = os.path.splitext(image_path)[1].lstrip(".").lower()
+            # mime = f"image/{ext}" if ext in ("png", "jpeg", "jpg", "gif", "webp", "svg") else "image/png"
+            # return f'<img src="data:{mime};base64,{b64}" alt="{alt}" />'
+            return f'<img src="{self.image_base_url}/{os.path.basename(image_path)}" alt="{alt}" />'
         except Exception as e:
             logger.debug(f"图片 base64 编码失败: {e}")
             return f'<img src="{self.image_base_url}/{os.path.basename(image_path)}" alt="{alt}" />'
