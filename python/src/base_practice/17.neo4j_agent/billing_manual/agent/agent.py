@@ -10,7 +10,7 @@ Adapted from 3.billing_manual_agent.py :: BillingAgent.
 import logging
 from typing import Any
 
-from deepagents import create_deep_agent
+from langchain.agents import create_agent
 from langchain_neo4j.vectorstores.neo4j_vector import Neo4jVector
 from langchain_openai import ChatOpenAI
 
@@ -71,7 +71,7 @@ class BillingAgent:
     def create(self) -> Any:
         """Create and return the deep_agent instance."""
         model = ChatOpenAI(**self.config.get_llm_params())
-        self.agent = create_deep_agent(
+        self.agent = create_agent(
             model=model,
             tools=[self.searcher, self.section_tool],
             system_prompt=self.SYSTEM_PROMPT,
