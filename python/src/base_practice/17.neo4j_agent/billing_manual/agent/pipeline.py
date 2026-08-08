@@ -45,9 +45,11 @@ class BillingManualPipeline:
 
         # Stage 2: generate image descriptions (first 3 images only, per original)
         self._log_stage(2, "生成图片描述")
-        describer = ImageDescriber(self.config)
-        images = [e for e in elements if isinstance(e, ImageElement)][:3]
-        describer.describe_batch(images)
+
+        # 图片描述暂时没有用注释掉
+        # describer = ImageDescriber(self.config)
+        # images = [e for e in elements if isinstance(e, ImageElement)]
+        # describer.describe_batch(images)
 
         # Stage 3: build vector store
         self._log_stage(3, "构建向量库")
@@ -81,7 +83,7 @@ def build_agent() -> Any:
 
     if config.init_on_startup:
         pipeline = BillingManualPipeline(config)
-        _, billing_agent = pipeline.build(force_recreate=False)
+        _, billing_agent = pipeline.build(force_recreate=True)
         return billing_agent.agent
     else:
         store_builder = VectorStoreBuilder(config)
