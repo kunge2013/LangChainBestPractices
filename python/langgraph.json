@@ -10,7 +10,7 @@
     "handoff_agent": "./src/base_practice/15.multi-agent/handoff_agent.py:main_agent",
     "search_agent": "./src/base_practice/16.deep_agents/InternetSearch.py:agent",
     "ChatBiAgent": "./src/base_practice/16.chatbi/ChatBiAgentOntologyRdf.py:agent",
-    "BillingManualAgent": "./src/base_practice/17.neo4j_agent/3.billing_manual_agent.py:agent"
+    "BillingManualAgent": "./src/base_practice/17.neo4j_agent/billing_manual_langgraph.py:agent"
   },
   "env": ".env"
 }
