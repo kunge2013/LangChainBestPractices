@@ -37,6 +37,7 @@ class VectorStoreBuilder:
             model_name=config.embedding_model,
             model_kwargs={"device": config.embedding_device},
             encode_kwargs={"normalize_embeddings": True},
+            cache_folder=config.embedding_cache_dir,
         )
 
     # ── public API ──────────────────────────────────────────────────────────

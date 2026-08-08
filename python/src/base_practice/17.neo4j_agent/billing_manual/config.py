@@ -54,6 +54,11 @@ class Config:
     # ── Embedding ───────────────────────────────────────────────────────────
     embedding_model: str = "shibing624/text2vec-base-chinese"
     embedding_device: str = "cpu"
+    embedding_cache_dir: str = field(
+        default_factory=lambda: os.environ.get(
+            "HF_HOME", r"C:\Users\ThinkPad\.cache\huggingface"
+        )
+    )
 
     # ── Text chunking ───────────────────────────────────────────────────────
     chunk_size: int = 1500
