@@ -16,6 +16,13 @@ points in this project). For more control, import directly from
 """
 
 import logging
+import sys
+from pathlib import Path
+
+# Ensure billing_manual package is importable
+_current_dir = str(Path(__file__).resolve().parent)
+if _current_dir not in sys.path:
+    sys.path.insert(0, _current_dir)
 
 logging.basicConfig(
     level=logging.INFO,
