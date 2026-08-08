@@ -15,6 +15,13 @@ points in this project). For more control, import directly from
 `billing_manual` and call `build_agent()` explicitly.
 """
 
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+)
+
 from billing_manual import build_agent
 
 # [AGC:START] tool=Cc author=fangkun
