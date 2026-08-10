@@ -30,8 +30,6 @@ NEO4J_PASSWORD = os.getenv("NEO4J_PASSWORD")
 URI = NEO4J_URI
 AUTH = (NEO4J_USERNAME, NEO4J_PASSWORD)
 
-INDEX_NAME = "creditNotesEmbedding"
-
 # Connect to Neo4j database
 driver = GraphDatabase.driver(URI, auth=AUTH)
 
@@ -39,20 +37,22 @@ driver = GraphDatabase.driver(URI, auth=AUTH)
 # Create Embedder object, needed to convert the user question (text) to a vector
 embedder = SentenceTransformerEmbeddings(model="all-MiniLM-L6-v2")
 
-# 先检查索引是否存在，不存在则给出提示
-check_query = """
-SHOW INDEXES YIELD name
-WHERE name = $indexName
+# 自动发现向量索引
+index_query = """
+SHOW INDEXES
+WHERE type = 'VECTOR' AND entityType = 'NODE'
 RETURN name
 """
 with driver.session() as session:
-    result = session.run(check_query, indexName=INDEX_NAME)
-    if not result.single():
+    result = session.run(index_query)
+    records = result.fetch_all()
+    if not records:
         raise Exception(
-            f"Vector index '{INDEX_NAME}' not found in Neo4j. "
-            f"Run unstructured_ingest.py first to create the index, "
-            f"or create it manually with: CREATE VECTOR INDEX {INDEX_NAME} IF NOT EXISTS FOR (n:__Chunk__) ON (n.embedding) OPTIONS {{indexConfig: {{`vector.dimensions`: 384, `vector.similarity_function`: 'cosine'}}}}"
+            "No vector index found in Neo4j. "
+            "Run unstructured_ingest.py first to create the index."
         )
+    INDEX_NAME = records[0]["name"]
+    print(f"Using vector index: {INDEX_NAME}")
 
 # Initialize the retriever
 retriever = VectorRetriever(driver, INDEX_NAME, embedder)

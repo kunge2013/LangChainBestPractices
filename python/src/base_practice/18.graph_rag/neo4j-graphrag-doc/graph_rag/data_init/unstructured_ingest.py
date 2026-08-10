@@ -93,24 +93,6 @@ async def main():
         neo4j_database="neo4j",
     )
 
-    # Pipeline 运行前，确保向量索引存在
-    create_index_query = """
-    CREATE VECTOR INDEX creditNotesEmbedding IF NOT EXISTS
-    FOR (n:__Chunk__)
-    ON (n.embedding)
-    OPTIONS {
-      indexConfig: {
-        `vector.dimensions`: 384,
-        `vector.similarity_function`: 'cosine'
-      }
-    }
-    """
-    try:
-        driver.execute_query(create_index_query)
-        print("Vector index 'creditNotesEmbedding' created/verified")
-    except Exception as e:
-        print(f"Warning: Could not create vector index: {e}")
-
     # 使用相对于当前文件的路径
     data_path = Path(__file__).parent / "data" / "credit-notes.pdf"
     print(f"开始处理 PDF: {data_path}")
@@ -122,6 +104,20 @@ async def main():
             timeout=6000  # 总超时 100 分钟
         )
         print(f"Pipeline 完成: {result}")
+
+        # 查询实际创建的向量索引名称
+        index_query = """
+        SHOW INDEXES
+        WHERE type = 'VECTOR' AND entityType = 'NODE'
+        RETURN name
+        """
+        index_result = driver.execute_query(index_query)
+        if index_result.records:
+            actual_index_name = index_result.records[0]["name"]
+            print(f"\n=== 向量索引信息 ===")
+            print(f"实际创建的索引名称: {actual_index_name}")
+            print(f"请在查询代码中使用此索引名: INDEX_NAME = '{actual_index_name}'")
+            print(f"===================\n")
     except asyncio.TimeoutError:
         print("Pipeline 执行超时（10分钟），已中断")
         raise
