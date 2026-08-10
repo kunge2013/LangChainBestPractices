@@ -90,7 +90,26 @@ async def main():
         schema=neo4j_schema,
         on_error="IGNORE",
         from_file=True,
+        neo4j_database="neo4j",
     )
+
+    # Pipeline 运行前，确保向量索引存在
+    create_index_query = """
+    CREATE VECTOR INDEX creditNotesEmbedding IF NOT EXISTS
+    FOR (n:__Chunk__)
+    ON (n.embedding)
+    OPTIONS {
+      indexConfig: {
+        `vector.dimensions`: 384,
+        `vector.similarity_function`: 'cosine'
+      }
+    }
+    """
+    try:
+        driver.execute_query(create_index_query)
+        print("Vector index 'creditNotesEmbedding' created/verified")
+    except Exception as e:
+        print(f"Warning: Could not create vector index: {e}")
 
     # 使用相对于当前文件的路径
     data_path = Path(__file__).parent / "data" / "credit-notes.pdf"
