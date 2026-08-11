@@ -39,3 +39,23 @@ def test_movie_agent_has_all_tools():
         # 验证工具已注册
         assert len(agent.tools) == 3
 # [AGC:END]
+
+
+# [AGC:START] tool=Cc author=fangkun
+@pytest.mark.skip(reason="需要真实 Neo4j 连接")
+def test_end_to_end_graph_query():
+    """端到端测试：结构化查询"""
+    pass
+
+
+@pytest.mark.skip(reason="需要真实 Neo4j 连接")
+def test_end_to_end_vector_search():
+    """端到端测试：语义搜索"""
+    pass
+
+
+@pytest.mark.skip(reason="需要真实 Neo4j 连接")
+def test_end_to_end_recommendation():
+    """端到端测试：推荐"""
+    pass
+# [AGC:END]
