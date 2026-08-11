@@ -36,8 +36,8 @@ class LLMConfig(BaseModel):
 @dataclass
 class EmbeddingConfig:
     """Embedding 配置，使用 HuggingFace 本地模型"""
-    model_name: str = os.getenv("EMBEDDING_MODEL", "shibing624/text2vec-base-chinese")
-    device: str = os.getenv("EMBEDDING_DEVICE", "cpu")
+    model_name: str = os.getenv("HF_EMBEDDING_MODEL", "shibing624/text2vec-base-chinese")
+    device: str = os.getenv("HF_EMBEDDING_DEVICE", "cpu")
     cache_dir: str = field(
         default_factory=lambda: os.environ.get(
             "HF_HOME", r"C:\Users\ThinkPad\.cache\huggingface"
