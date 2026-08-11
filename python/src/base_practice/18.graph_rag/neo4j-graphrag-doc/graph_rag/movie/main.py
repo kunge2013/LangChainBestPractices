@@ -24,7 +24,7 @@ def main():
     print("  电影 Graph RAG 问答系统")
     print("="*80)
     print(f"  LLM: {settings.llm.model_name} @ {settings.llm.base_url}")
-    print(f"  Embedding: {settings.embedding.model_name} @ {settings.embedding.base_url}")
+    print(f"  Embedding: {settings.embedding.model_name} (device={settings.embedding.device})")
     print(f"  Neo4j: {settings.neo4j.uri}")
     print("="*80)
 
