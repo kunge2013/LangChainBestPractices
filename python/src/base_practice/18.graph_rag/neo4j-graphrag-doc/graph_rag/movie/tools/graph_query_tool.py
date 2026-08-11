@@ -117,7 +117,8 @@ def create_graph_query_tool(llm: BaseLLM) -> Tool:
         llm=llm,
         graph=graph,
         verbose=True,
-        return_intermediate_steps=False
+        return_intermediate_steps=False,
+        allow_dangerous_requests=True,  # 确认允许生成 Cypher 查询
     )
 
     def query_func(question: str) -> str:
