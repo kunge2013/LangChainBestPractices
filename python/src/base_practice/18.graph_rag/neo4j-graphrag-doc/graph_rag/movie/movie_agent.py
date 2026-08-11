@@ -89,5 +89,34 @@ def main():
 # [AGC:END]
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
+print("="*80)
+print("  电影 Graph RAG 问答系统")
+print("="*80)
+print(f"  LLM: {settings.llm.model_name} @ {settings.llm.base_url}")
+print(f"  Embedding: {settings.embedding.model_name} (device={settings.embedding.device})")
+print(f"  Neo4j: {settings.neo4j.uri}")
+print("="*80)
+
+# 初始化 LLM（使用 OpenAI 协议，支持 dashscope）
+llm = ChatOpenAI(
+    model=settings.llm.model_name,
+    temperature=settings.llm.temperature,
+    openai_api_base=settings.llm.base_url,
+    openai_api_key=settings.llm.api_key,
+    max_retries=3,
+)
+
+# 创建工具
+print("\n[INFO] 初始化工具...")
+tools = [
+    create_graph_query_tool(llm),
+    create_vector_search_tool(llm),
+    create_recommender_tool(llm, llm)
+]
+print("[OK] 工具初始化完成")
+
+# 创建 Agent
+print("\n[INFO] 初始化 Agent...")
+agent = create_movie_agent(llm, tools)

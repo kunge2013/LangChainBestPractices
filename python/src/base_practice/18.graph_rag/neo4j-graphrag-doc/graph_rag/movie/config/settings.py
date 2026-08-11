@@ -14,7 +14,7 @@ from dotenv import load_dotenv
 # [AGC:START] tool=Cc author=fangkun
 
 # 加载 python/.env 文件
-load_dotenv()
+load_dotenv(override=True)
 
 
 class Neo4jConfig(BaseModel):
