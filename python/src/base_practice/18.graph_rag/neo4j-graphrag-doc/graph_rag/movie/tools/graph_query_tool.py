@@ -45,6 +45,41 @@ class SimpleNeo4jGraph:
         (:Studio)-[:DISTRIBUTED_BY]->(:Movie)
         """
 
+    @property
+    def get_structured_schema(self):
+        """返回结构化 schema（GraphCypherQAChain 需要此属性）"""
+        return {
+            "node_props": {
+                "Movie": [
+                    {"property": "title", "type": "STRING"},
+                    {"property": "released", "type": "INTEGER"},
+                    {"property": "rating", "type": "FLOAT"},
+                    {"property": "tagline", "type": "STRING"},
+                    {"property": "plot_summary", "type": "STRING"},
+                    {"property": "genres", "type": "LIST"},
+                ],
+                "Person": [
+                    {"property": "name", "type": "STRING"},
+                    {"property": "born", "type": "INTEGER"},
+                    {"property": "gender", "type": "STRING"},
+                ],
+                "Studio": [
+                    {"property": "name", "type": "STRING"},
+                    {"property": "country", "type": "STRING"},
+                ],
+            },
+            "rel_props": {
+                "ACTED_IN": [{"property": "roles", "type": "LIST"}],
+                "DISTRIBUTED_BY": [{"property": "year", "type": "INTEGER"}],
+            },
+            "relationships": [
+                {"start": "Person", "type": "ACTED_IN", "end": "Movie"},
+                {"start": "Person", "type": "DIRECTED", "end": "Movie"},
+                {"start": "Person", "type": "WROTE", "end": "Movie"},
+                {"start": "Studio", "type": "DISTRIBUTED_BY", "end": "Movie"},
+            ],
+        }
+
     def query(self, cypher_query: str, params: dict = None) -> list:
         """执行 Cypher 查询"""
         with self._driver.session(database=self._database) as session:
