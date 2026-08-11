@@ -5,7 +5,7 @@
 不依赖 APOC 插件
 """
 from langchain_core.tools import Tool
-from langchain_neo4j import GraphCypherQAChain
+from langchain_neo4j import Neo4jGraph, GraphCypherQAChain
 from langchain_core.language_models import BaseLLM
 from neo4j import GraphDatabase
 from config import settings
@@ -14,40 +14,36 @@ from config import settings
 # [AGC:START] tool=Cc author=fangkun
 
 
-class SimpleNeo4jGraph:
+class NoAPOCNeo4jGraph(Neo4jGraph):
     """
-    简化的 Neo4j Graph 类
-    不依赖 APOC，提供 GraphCypherQAChain 所需的最小接口
+    Neo4jGraph 的子类，不依赖 APOC 插件
+    覆盖 refresh_schema 方法，使用预定义的 schema
     """
 
-    def __init__(self):
-        self._driver = GraphDatabase.driver(
-            settings.neo4j.uri,
-            auth=(settings.neo4j.username, settings.neo4j.password)
-        )
-        self._database = settings.neo4j.database
+    def __init__(self, *args, **kwargs):
+        # 调用父类初始化，但捕获可能的 APOC 错误
+        try:
+            super().__init__(*args, **kwargs)
+        except Exception as e:
+            if "apoc" in str(e).lower():
+                # 如果是因为 APOC，跳过 schema 刷新
+                print(f"[WARN] APOC not available, using predefined schema: {e}")
+                # 手动初始化必要的属性
+                self._driver = GraphDatabase.driver(
+                    kwargs.get('url', settings.neo4j.uri),
+                    auth=(
+                        kwargs.get('username', settings.neo4j.username),
+                        kwargs.get('password', settings.neo4j.password)
+                    )
+                )
+                self._database = kwargs.get('database', settings.neo4j.database)
+                self.structured_schema = self._get_predefined_schema()
+                self.schema = self._format_schema()
+            else:
+                raise
 
-        # 预定义 schema（电影领域）
-        self.schema = """
-        Node properties:
-        Movie {title: STRING, released: INTEGER, rating: FLOAT, tagline: STRING, plot_summary: STRING, genres: LIST}
-        Person {name: STRING, born: INTEGER, gender: STRING}
-        Studio {name: STRING, country: STRING}
-
-        Relationship properties:
-        ACTED_IN {roles: LIST}
-        DISTRIBUTED_BY {year: INTEGER}
-
-        Relationships:
-        (:Person)-[:ACTED_IN]->(:Movie)
-        (:Person)-[:DIRECTED]->(:Movie)
-        (:Person)-[:WROTE]->(:Movie)
-        (:Studio)-[:DISTRIBUTED_BY]->(:Movie)
-        """
-
-    @property
-    def get_structured_schema(self):
-        """返回结构化 schema（GraphCypherQAChain 需要此属性）"""
+    def _get_predefined_schema(self):
+        """返回预定义的结构化 schema"""
         return {
             "node_props": {
                 "Movie": [
@@ -80,22 +76,41 @@ class SimpleNeo4jGraph:
             ],
         }
 
-    def query(self, cypher_query: str, params: dict = None) -> list:
-        """执行 Cypher 查询"""
-        with self._driver.session(database=self._database) as session:
-            result = session.run(cypher_query, params or {})
-            return [record.data() for record in result]
+    def _format_schema(self):
+        """格式化 schema 为字符串"""
+        return """
+Node properties:
+Movie {title: STRING, released: INTEGER, rating: FLOAT, tagline: STRING, plot_summary: STRING, genres: LIST}
+Person {name: STRING, born: INTEGER, gender: STRING}
+Studio {name: STRING, country: STRING}
 
-    def close(self):
-        """关闭连接"""
-        self._driver.close()
+Relationship properties:
+ACTED_IN {roles: LIST}
+DISTRIBUTED_BY {year: INTEGER}
+
+Relationships:
+(:Person)-[:ACTED_IN]->(:Movie)
+(:Person)-[:DIRECTED]->(:Movie)
+(:Person)-[:WROTE]->(:Movie)
+(:Studio)-[:DISTRIBUTED_BY]->(:Movie)
+"""
+
+    def refresh_schema(self):
+        """覆盖 refresh_schema，不依赖 APOC"""
+        self.structured_schema = self._get_predefined_schema()
+        self.schema = self._format_schema()
 
 
 def create_graph_query_tool(llm: BaseLLM) -> Tool:
     """创建结构化查询工具"""
 
-    # 初始化简化的 Neo4j Graph（不依赖 APOC）
-    graph = SimpleNeo4jGraph()
+    # 初始化 Neo4j Graph（不依赖 APOC）
+    graph = NoAPOCNeo4jGraph(
+        url=settings.neo4j.uri,
+        username=settings.neo4j.username,
+        password=settings.neo4j.password,
+        database=settings.neo4j.database,
+    )
 
     # 创建 Cypher QA Chain
     chain = GraphCypherQAChain.from_llm(
