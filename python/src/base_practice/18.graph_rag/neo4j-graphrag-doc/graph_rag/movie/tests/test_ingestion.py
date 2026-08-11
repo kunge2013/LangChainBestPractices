@@ -101,4 +101,61 @@ def test_ingest_movies_data_acted_in_relationship():
         assert params['props'] == {'roles': ['Cobb']}
 
 
+def test_create_vector_index_calls_neo4j():
+    """测试向量索引创建调用 Neo4j"""
+    with patch('ingestion.ingest_vectors.Neo4jConnection') as mock_conn:
+        from ingestion.ingest_vectors import create_vector_index
+        create_vector_index()
+
+        # 验证调用了 execute_write 方法创建索引
+        assert mock_conn.execute_write.called
+        # 验证传入的查询包含向量索引创建语句
+        call_args = mock_conn.execute_write.call_args
+        query = call_args.args[0]
+        assert 'CREATE VECTOR INDEX' in query
+        assert 'movie_plot_summary_index' in query
+        assert 'vector.dimensions' in query
+        assert '384' in query
+
+
+def test_create_vector_index_query_content():
+    """测试向量索引查询语句包含正确的配置"""
+    with patch('ingestion.ingest_vectors.Neo4jConnection') as mock_conn:
+        from ingestion.ingest_vectors import create_vector_index
+        create_vector_index()
+
+        call_args = mock_conn.execute_write.call_args
+        query = call_args.args[0]
+        assert 'cosine' in query
+        assert 'plot_summary_embedding' in query
+
+
+def test_update_movie_embeddings_generates_and_stores():
+    """测试电影 embedding 更新流程"""
+    with patch('ingestion.ingest_vectors.Neo4jConnection') as mock_conn:
+        # 模拟查询返回的电影数据
+        mock_conn.execute_query.return_value = [
+            {"title": "Inception", "plot_summary": "A thief who steals corporate secrets"},
+            {"title": "Movie Without Summary", "plot_summary": None},
+        ]
+
+        with patch('ingestion.ingest_vectors.HuggingFaceEmbeddings') as mock_embeddings_cls:
+            mock_embeddings_instance = MagicMock()
+            mock_embeddings_instance.embed_query.return_value = [0.1] * 384
+            mock_embeddings_cls.return_value = mock_embeddings_instance
+
+            from ingestion.ingest_vectors import update_movie_embeddings
+            update_movie_embeddings()
+
+            # 验证只对有 plot_summary 的电影调用了 embed_query
+            assert mock_embeddings_instance.embed_query.call_count == 1
+            # 验证 execute_write 被调用（只有 Inception 被更新）
+            write_calls = mock_conn.execute_write.call_args_list
+            # 第一次写入是 update_movie_embeddings 的 SET embedding 调用
+            assert len(write_calls) == 1
+            params = write_calls[0].args[1]
+            assert params["title"] == "Inception"
+            assert len(params["embedding"]) == 384
+
+
 # [AGC:END]
