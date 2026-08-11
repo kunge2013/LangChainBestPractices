@@ -6,6 +6,7 @@
 from langchain_core.tools import Tool
 from langchain_neo4j import Neo4jGraph, GraphCypherQAChain
 from langchain_core.language_models import BaseLLM
+from config import settings
 
 
 # [AGC:START] tool=Cc author=fangkun
@@ -14,8 +15,13 @@ from langchain_core.language_models import BaseLLM
 def create_graph_query_tool(llm: BaseLLM) -> Tool:
     """创建结构化查询工具"""
 
-    # 初始化 Neo4j Graph
-    graph = Neo4jGraph()
+    # 初始化 Neo4j Graph（传入配置参数）
+    graph = Neo4jGraph(
+        url=settings.neo4j.uri,
+        username=settings.neo4j.username,
+        password=settings.neo4j.password,
+        database=settings.neo4j.database,
+    )
 
     # 创建 Cypher QA Chain
     chain = GraphCypherQAChain.from_llm(

@@ -1,36 +1,49 @@
 # [AGC:FILE] tool=Cc author=fangkun date=2026-08-11
+"""
+配置模块
+从项目根目录 python/.env 读取配置
+支持 OpenAI 协议（dashscope 等兼容 API）
+"""
+import os
+from pathlib import Path
 from pydantic import BaseModel
-from typing import Optional
+from dotenv import load_dotenv
 
 
 # [AGC:START] tool=Cc author=fangkun
+
+# 加载 python/.env 文件
+_env_path = Path(__file__).parent.parent.parent.parent / ".env"
+load_dotenv(_env_path)
+
+
 class Neo4jConfig(BaseModel):
-    uri: str = "bolt://localhost:7687"
-    username: str = "neo4j"
-    password: str = "password"
-    database: str = "neo4j"
+    uri: str = os.getenv("NEO4J_URI", "bolt://localhost:7687")
+    username: str = os.getenv("NEO4J_USERNAME", "neo4j")
+    password: str = os.getenv("NEO4J_PASSWORD", "password")
+    database: str = os.getenv("NEO4J_DATABASE", "neo4j")
 
 
 class LLMConfig(BaseModel):
-    model_name: str = "gpt-4"
-    temperature: float = 0.0
-    max_retries: int = 3
+    """LLM 配置，使用 OpenAI 协议，支持 dashscope 等兼容 API"""
+    base_url: str = os.getenv("OPENAI_BASE_URL", "https://api.openai.com/v1")
+    api_key: str = os.getenv("OPENAI_API_KEY", "")
+    model_name: str = os.getenv("OPENAI_MODEL", "gpt-4")
+    temperature: float = float(os.getenv("OPENAI_TEMPERATURE", "0.7"))
+    max_tokens: int = int(os.getenv("OPENAI_MAX_TOKENS", "20000"))
 
 
 class EmbeddingConfig(BaseModel):
-    model_name: str = "sentence-transformers/all-MiniLM-L6-v2"
-    device: str = "cpu"
-    cache_dir: str = "./embedding_cache"
+    """Embedding 配置，使用 OpenAI 协议"""
+    base_url: str = os.getenv("EMBEDDING_BASE_URL", "https://api.openai.com/v1")
+    api_key: str = os.getenv("EMBEDDING_API_KEY", "")
+    model_name: str = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
 
 
 class Settings(BaseModel):
     neo4j: Neo4jConfig = Neo4jConfig()
     llm: LLMConfig = LLMConfig()
     embedding: EmbeddingConfig = EmbeddingConfig()
-
-    class Config:
-        env_prefix = "MOVIE_"
-        env_nested_delimiter = "__"
 
 
 # 全局配置实例

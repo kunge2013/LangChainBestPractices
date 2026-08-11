@@ -2,9 +2,11 @@
 """
 语义搜索工具
 使用 Neo4jVector 基于 plot_summary 做相似度搜索
+Embedding 使用 OpenAI 协议，支持 dashscope 等兼容 API
 """
 from langchain_core.tools import Tool
 from langchain_neo4j import Neo4jVector
+from langchain_openai import OpenAIEmbeddings
 from langchain_core.language_models import BaseLLM
 from config import settings
 
@@ -15,9 +17,20 @@ from config import settings
 def create_vector_search_tool(llm: BaseLLM) -> Tool:
     """创建语义搜索工具"""
 
-    # 初始化 Neo4j Vector Store
+    # 初始化 OpenAI Embedding（支持 dashscope 等兼容 API）
+    embeddings = OpenAIEmbeddings(
+        model=settings.embedding.model_name,
+        openai_api_base=settings.embedding.base_url,
+        openai_api_key=settings.embedding.api_key,
+    )
+
+    # 初始化 Neo4j Vector Store（传入连接参数）
     vector_store = Neo4jVector.from_existing_index(
-        embedding=settings.embedding.model_name,
+        embedding=embeddings,
+        url=settings.neo4j.uri,
+        username=settings.neo4j.username,
+        password=settings.neo4j.password,
+        database=settings.neo4j.database,
         index_name="movie_plot_summary_index",
         text_node_property="plot_summary",
         embedding_node_property="plot_summary_embedding",

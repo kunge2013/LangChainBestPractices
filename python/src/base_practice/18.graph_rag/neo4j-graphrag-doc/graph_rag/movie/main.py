@@ -1,12 +1,17 @@
 # [AGC:FILE] tool=Cc author=fangkun date=2026-08-11
+"""
+主入口：交互式电影问答系统
+使用 OpenAI 协议，支持 dashscope 等兼容 API
+"""
 import sys
 from pathlib import Path
 
 # 添加项目根目录到 Python 路径
 sys.path.insert(0, str(Path(__file__).parent))
 
-from langchain_openai import ChatOpenAI
+# 配置模块会自动加载 python/.env
 from config import settings
+from langchain_openai import ChatOpenAI
 from tools import create_graph_query_tool, create_vector_search_tool, create_recommender_tool
 from agent import create_movie_agent
 
@@ -18,12 +23,18 @@ def main():
     print("="*80)
     print("  电影 Graph RAG 问答系统")
     print("="*80)
+    print(f"  LLM: {settings.llm.model_name} @ {settings.llm.base_url}")
+    print(f"  Embedding: {settings.embedding.model_name} @ {settings.embedding.base_url}")
+    print(f"  Neo4j: {settings.neo4j.uri}")
+    print("="*80)
 
-    # 初始化 LLM
+    # 初始化 LLM（使用 OpenAI 协议，支持 dashscope）
     llm = ChatOpenAI(
         model=settings.llm.model_name,
         temperature=settings.llm.temperature,
-        max_retries=settings.llm.max_retries
+        openai_api_base=settings.llm.base_url,
+        openai_api_key=settings.llm.api_key,
+        max_retries=3,
     )
 
     # 创建工具
