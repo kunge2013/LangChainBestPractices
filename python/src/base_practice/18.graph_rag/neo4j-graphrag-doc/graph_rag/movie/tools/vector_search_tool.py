@@ -2,11 +2,11 @@
 """
 语义搜索工具
 使用 Neo4jVector 基于 plot_summary 做相似度搜索
-Embedding 使用 OpenAI 协议，支持 dashscope 等兼容 API
+Embedding 使用 HuggingFace 本地模型
 """
 from langchain_core.tools import Tool
 from langchain_neo4j import Neo4jVector
-from langchain_openai import OpenAIEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_core.language_models import BaseLLM
 from config import settings
 
@@ -17,11 +17,12 @@ from config import settings
 def create_vector_search_tool(llm: BaseLLM) -> Tool:
     """创建语义搜索工具"""
 
-    # 初始化 OpenAI Embedding（支持 dashscope 等兼容 API）
-    embeddings = OpenAIEmbeddings(
-        model=settings.embedding.model_name,
-        openai_api_base=settings.embedding.base_url,
-        openai_api_key=settings.embedding.api_key,
+    # 初始化 HuggingFace Embedding（本地模型）
+    embeddings = HuggingFaceEmbeddings(
+        model_name=settings.embedding.model_name,
+        model_kwargs={"device": settings.embedding.device},
+        encode_kwargs={"normalize_embeddings": True},
+        cache_folder=settings.embedding.cache_dir,
     )
 
     # 初始化 Neo4j Vector Store（传入连接参数）

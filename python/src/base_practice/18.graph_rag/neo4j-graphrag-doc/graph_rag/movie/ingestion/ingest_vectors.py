@@ -15,7 +15,7 @@ def create_vector_index() -> None:
     """
     为 plot_summary 创建 Neo4j 向量索引
 
-    使用 all-MiniLM-L6-v2 模型输出的 384 维向量，
+    使用 text2vec-base-chinese 模型输出的 768 维向量，
     相似度函数使用 cosine。
     """
     query = """
@@ -23,7 +23,7 @@ def create_vector_index() -> None:
     FOR (m:Movie)
     ON m.plot_summary_embedding
     OPTIONS {indexConfig: {
-        `vector.dimensions`: 384,
+        `vector.dimensions`: 768,
         `vector.similarity_function`: 'cosine'
     }}
     """
@@ -39,7 +39,7 @@ def update_movie_embeddings() -> None:
     """
     更新所有电影的 plot_summary embedding
 
-    使用 HuggingFaceEmbeddings 加载 sentence-transformers/all-MiniLM-L6-v2 模型，
+    使用 HuggingFaceEmbeddings 加载 shibing624/text2vec-base-chinese 模型，
     对每部电影的 plot_summary 生成 embedding 并写入数据库。
     """
     # 初始化 embedding 模型

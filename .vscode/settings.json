@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "python/src/base_practice/chatbi"
+    ],
+    "python.analysis.typeCheckingMode": "basic"
+}

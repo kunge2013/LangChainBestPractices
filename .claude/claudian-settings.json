@@ -39,7 +39,7 @@
     ]
   },
   "permissionMode": "yolo",
-  "model": "glm-4.7",
+  "model": "qwen3.6-plus",
   "thinkingBudget": "off",
   "enableAutoTitleGeneration": true,
   "titleGenerationModel": "",
@@ -54,7 +54,7 @@
     "~/Downloads"
   ],
   "persistentExternalContextPaths": [],
-  "environmentVariables": "ANTHROPIC_AUTH_TOKEN=YOUR_ANTHROPIC_AUTH_TOKEN\nANTHROPIC_BASE_URL=https=//coding.dashscope.aliyuncs.com/apps/anthropic\nANTHROPIC_DEFAULT_HAIKU_MODEL=qwen3.5-plus\nANTHROPIC_DEFAULT_OPUS_MODEL=qwen3.6-plus\nANTHROPIC_DEFAULT_SONNET_MODEL=qwen3.5-plus\nANTHROPIC_MODEL=glm-4.7\nmax_tokens=32768",
+  "environmentVariables": "ANTHROPIC_AUTH_TOKEN=YOUR_ANTHROPIC_AUTH_TOKEN\nANTHROPIC_BASE_URL=https=//coding.dashscope.aliyuncs.com/apps/anthropic\nANTHROPIC_DEFAULT_HAIKU_MODEL=qwen3.6-plus\nANTHROPIC_DEFAULT_OPUS_MODEL=qwen3.6-plus\nANTHROPIC_DEFAULT_SONNET_MODEL=qwen3.5-plus\nANTHROPIC_MODEL=glm-4.7\nmax_tokens=32768",
   "envSnippets": [],
   "customContextLimits": {},
   "keyboardNavigation": {
@@ -69,8 +69,8 @@
   },
   "loadUserClaudeSettings": true,
   "lastClaudeModel": "haiku",
-  "lastCustomModel": "",
-  "lastEnvHash": "ANTHROPIC_BASE_URL=https=//coding.dashscope.aliyuncs.com/apps/anthropic|ANTHROPIC_DEFAULT_HAIKU_MODEL=qwen3.5-plus|ANTHROPIC_DEFAULT_OPUS_MODEL=qwen3.6-plus|ANTHROPIC_DEFAULT_SONNET_MODEL=qwen3.5-plus|ANTHROPIC_MODEL=glm-4.7",
+  "lastCustomModel": "qwen3.6-plus",
+  "lastEnvHash": "ANTHROPIC_BASE_URL=https=//coding.dashscope.aliyuncs.com/apps/anthropic|ANTHROPIC_DEFAULT_HAIKU_MODEL=qwen3.6-plus|ANTHROPIC_DEFAULT_OPUS_MODEL=qwen3.6-plus|ANTHROPIC_DEFAULT_SONNET_MODEL=qwen3.5-plus|ANTHROPIC_MODEL=glm-4.7",
   "maxTabs": 3,
   "tabBarPosition": "input",
   "enableAutoScroll": true,

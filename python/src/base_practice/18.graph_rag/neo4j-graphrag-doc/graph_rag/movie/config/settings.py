@@ -5,6 +5,7 @@
 支持 OpenAI 协议（dashscope 等兼容 API）
 """
 import os
+from dataclasses import dataclass, field
 from pathlib import Path
 from pydantic import BaseModel
 from dotenv import load_dotenv
@@ -13,8 +14,7 @@ from dotenv import load_dotenv
 # [AGC:START] tool=Cc author=fangkun
 
 # 加载 python/.env 文件
-_env_path = Path(__file__).parent.parent.parent.parent / ".env"
-load_dotenv(_env_path)
+load_dotenv()
 
 
 class Neo4jConfig(BaseModel):
@@ -33,17 +33,25 @@ class LLMConfig(BaseModel):
     max_tokens: int = int(os.getenv("OPENAI_MAX_TOKENS", "20000"))
 
 
-class EmbeddingConfig(BaseModel):
-    """Embedding 配置，使用 OpenAI 协议"""
-    base_url: str = os.getenv("EMBEDDING_BASE_URL", "https://api.openai.com/v1")
-    api_key: str = os.getenv("EMBEDDING_API_KEY", "")
-    model_name: str = os.getenv("EMBEDDING_MODEL", "text-embedding-3-small")
+@dataclass
+class EmbeddingConfig:
+    """Embedding 配置，使用 HuggingFace 本地模型"""
+    model_name: str = os.getenv("EMBEDDING_MODEL", "shibing624/text2vec-base-chinese")
+    device: str = os.getenv("EMBEDDING_DEVICE", "cpu")
+    cache_dir: str = field(
+        default_factory=lambda: os.environ.get(
+            "HF_HOME", r"C:\Users\ThinkPad\.cache\huggingface"
+        )
+    )
 
 
 class Settings(BaseModel):
     neo4j: Neo4jConfig = Neo4jConfig()
     llm: LLMConfig = LLMConfig()
     embedding: EmbeddingConfig = EmbeddingConfig()
+
+    class Config:
+        arbitrary_types_allowed = True
 
 
 # 全局配置实例

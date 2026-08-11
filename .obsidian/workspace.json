@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "9d7f76c69c87d70b",
+        "id": "50618a9dbbb38a41",
         "type": "tabs",
         "children": [
           {
-            "id": "9449c2fda70b53b8",
+            "id": "32d1a61686cff11e",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "doc/python/langchain/1.LangChain-short-term-memory(短期记忆).md",
+                "file": "docs/superpowers/plans/2026-08-04-ontology-expansion-implementation.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "1.LangChain-short-term-memory(短期记忆)"
+              "title": "2026-08-04-ontology-expansion-implementation"
             }
           }
         ]
@@ -41,7 +41,9 @@
               "type": "file-explorer",
               "state": {
                 "sortOrder": "alphabetical",
-                "autoReveal": false
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-folder-closed",
               "title": "文件列表"
@@ -195,21 +197,35 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "9449c2fda70b53b8",
+  "active": "d0fa7fecc6d2c9ea",
   "lastOpenFiles": [
-    "python/src/chains/__pycache__/PgShortTermMemory.cpython-310.pyc",
-    "python/src/__pycache__/__init__.cpython-310.pyc",
-    "python/src/__pycache__",
-    "python/src/chains/__pycache__/PgShortTermMemory.cpython-311.pyc",
-    "python/src/chains/__pycache__",
-    "python/langgraph.json~",
-    "python/src/chains/PgShortTermMemory.py~",
-    "python/requirements_pg.txt",
-    "requirements_pg.txt",
-    "doc/python/Deep Agents/Deep Agent 理解与 agent.py 核心解析.md",
+    "python/src/base_practice/17.neo4j_agent/1.neo4j-langchain.py~",
+    "python/src/base_practice/17.neo4j_agent/1.neo4j-langchain.py",
+    "doc/python/langchain-neo4j",
+    "python/src/base_practice/17.neo4j_agent/__init__.py",
+    "python/src/base_practice/17.neo4j_agent",
+    "python/src/base_practice/17/17.neo4j_agent/__init__.py",
+    "python/src/base_practice/17/17.neo4j_agent",
+    "python/src/base_practice/17/__init__.py",
+    "python/src/base_practice/17/neo4j_agent/__init__.py",
+    "python/src/base_practice/17/neo4j_agent",
+    "python/src/base_practice/17",
+    "python/src/base_practice/chatbi/ontology/README.md",
+    "python/src/base_practice/chatbi/chatbi.md",
+    "python/src/base_practice/chatbi/1.2.ChatBiAgentOntology本体设计.md",
+    "python/src/base_practice/chatbi/1.1.多维度-多指标mut_metice.md",
+    "python/src/base_practice/16.chatbi/ontology/README.md",
+    "python/src/base_practice/16.chatbi/ontology_refrence.md",
+    "python/src/base_practice/16.chatbi/README.md",
+    "docs/superpowers/plans/2026-08-04-ontology-expansion-implementation.md",
+    "pytest-cache-files-zhbyqi_l/README.md",
+    "docs/superpowers/specs/2026-08-04-ontology-expansion-design.md",
+    "python/src/base_practice/16.chatbi/chatbi.md",
+    "python/src/base_practice/16.chatbi/1.1.多维度-多指标mut_metice.md",
+    "python/src/base_practice/16.chatbi/多维度-多指标mut_metice.md",
+    "python/src/base_practice/15.multi-agent/langsmith.deploy.md",
     "doc/python/langchain/1.LangChain-short-term-memory(短期记忆).md",
-    "doc/python/langchain",
-    "python/src/chains/PgShortTermMemory.py",
+    "doc/python/Deep Agents/Deep Agent 理解与 agent.py 核心解析.md",
     "doc/python/Test/1. 可视化测试-Get started with Studio.md",
     "doc/python/Deep Agents/1.Build a data analysis agent.md",
     "doc/ts/learn/Retrieval Augmented Generation (RAG) with Deep Agents.md",
@@ -219,20 +235,6 @@
     "doc/ts/Deep Agents/source_code/deep-agent-subagent-cards/deep-agent-subagent-cards/README.md",
     "typescript/packages/agent/node_modules/@ag-ui/a2ui-toolkit/README.md",
     "typescript/packages/agent/node_modules/fast-json-patch/README.md",
-    "typescript/packages/agent/node_modules/@ai-sdk/gateway/README.md",
-    "typescript/packages/agent/node_modules/@ai-sdk/gateway/CHANGELOG.md",
-    "typescript/packages/agent/node_modules/@hono/zod-validator/README.md",
-    "typescript/packages/agent/node_modules/@hono/zod-validator/CHANGELOG.md",
-    "typescript/packages/agent/node_modules/@hono/node-ws/README.md",
-    "typescript/packages/agent/node_modules/@hono/node-ws/CHANGELOG.md",
-    "typescript/packages/agent/node_modules/commander/Readme.md",
-    "typescript/packages/agent/node_modules/human-signals/README.md",
-    "typescript/packages/agent/node_modules/get-stream/readme.md",
-    "typescript/packages/agent/node_modules/@clack/core/README.md",
-    "typescript/packages/agent/node_modules/@clack/core/CHANGELOG.md",
-    "typescript/packages/agent/node_modules/@clack/prompts/README.md",
-    "typescript/packages/agent/node_modules/@clack/prompts/CHANGELOG.md",
-    "typescript/packages/agent/node_modules/stacktrace-parser/README.md",
     "typescript/packages/agent/node_modules/winston-console-format/demo.png",
     "typescript/packages/agent/node_modules/pino-pretty/demo.png",
     "typescript/packages/agent/node_modules/phoenix/priv/static/phoenix.png",
