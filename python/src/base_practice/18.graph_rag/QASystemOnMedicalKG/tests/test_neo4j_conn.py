@@ -3,7 +3,19 @@ import os
 import sys
 from unittest.mock import patch, MagicMock
 
+import pytest
+
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
+
+
+# [AGC:START] tool=Cc author=fangkun
+@pytest.fixture(autouse=True)
+def reset_driver():
+    import neo4j_conn
+    neo4j_conn._driver = None
+    yield
+    neo4j_conn._driver = None
+# [AGC:END]
 
 
 # [AGC:START] tool=Cc author=fangkun
@@ -24,14 +36,11 @@ class TestGetSession:
             assert session is mock_session
 
         mock_gdb.driver.assert_called_once()
-    # [AGC:END]
 
-    # [AGC:START] tool=Cc author=fangkun
     @patch("neo4j_conn.GraphDatabase")
     def test_driver_is_singleton(self, mock_gdb):
         import neo4j_conn
 
-        neo4j_conn._driver = None
         mock_driver = MagicMock()
         mock_gdb.driver.return_value = mock_driver
 
@@ -48,14 +57,11 @@ class TestGetSession:
 
         assert mock_gdb.driver.call_count == 1
         neo4j_conn._driver = None
-    # [AGC:END]
 
-    # [AGC:START] tool=Cc author=fangkun
     @patch("neo4j_conn.GraphDatabase")
     def test_session_uses_database_from_env(self, mock_gdb):
         import neo4j_conn
 
-        neo4j_conn._driver = None
         mock_driver = MagicMock()
         mock_gdb.driver.return_value = mock_driver
 
@@ -70,7 +76,7 @@ class TestGetSession:
 
         mock_driver.session.assert_called_with(database="mydb")
         neo4j_conn._driver = None
-    # [AGC:END]
+# [AGC:END]
 
 
 # [AGC:START] tool=Cc author=fangkun
