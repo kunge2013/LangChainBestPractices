@@ -177,11 +177,13 @@ def write_records(records: list[dict]) -> None:
 def build_llm() -> ChatOpenAI:
     base_url = os.environ.get("OPENAI_BASE_URL", "https://coding.dashscope.aliyuncs.com/v1")
     model = os.environ.get("OPENAI_MODEL", "qwen3.6-plus")
-    # qwen 默认开 thinking，会限制 tool_choice 导致结构化输出 400，必须显式关
+    # qwen 默认开 thinking，会限制 tool_choice 导致结构化输出 400，必须显式关。
+    # 走 extra_body：直接展开进构造参数会进 model_kwargs -> payload 顶层，
+    # 新版 openai SDK 强类型签名会抛 TypeError
     extra = {"enable_thinking": False} if ("dashscope" in base_url or "qwen" in model.lower()) else None
     return ChatOpenAI(model=model, base_url=base_url,
                       api_key=os.environ.get("OPENAI_API_KEY"),
-                      temperature=0, **(extra or {}))
+                      temperature=0, extra_body=extra)
 
 
 SAMPLES = {

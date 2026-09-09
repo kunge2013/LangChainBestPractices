@@ -51,6 +51,8 @@ def build_chat_model(provider: str = "auto") -> ChatOpenAI:
         api_key=os.environ.get("OPENAI_API_KEY"),
         temperature=float(os.environ.get("OPENAI_TEMPERATURE", "0")),
         max_tokens=int(max_tokens) if max_tokens else None,
-        **(cfg["extra_body"] or {}),
+        # qwen 的 enable_thinking 必须走 extra_body：直接展开进构造参数会进 model_kwargs
+        # -> payload 顶层，新版 openai SDK 强类型签名会抛 TypeError
+        extra_body=cfg["extra_body"],
     )
 # [AGC:END]
