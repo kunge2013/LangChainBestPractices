@@ -1370,6 +1370,215 @@ python -m src.structured_output.pure_structured_output --method json_mode
 
 ---
 
+### 6.8 扩展：多种 schema，怎么保证返回的是其中一种？
+
+**场景**：不只是病历（`PatientRecord`），还有化验单（`LabReport`）、处方（`Prescription`）……
+模型要根据输入判断该返回哪种格式，而且必须**严格符合其中某一种**，不能东拼西凑。
+
+**核心思路：一个 schema = 一个工具。** 单 schema 时 `tools` 数组里只有一个函数；
+多 schema 就是把 `tools` 数组里放多个函数，让模型**自己选**。
+
+```mermaid
+---
+title: "多 schema = 多工具，模型自选"
+---
+flowchart TD
+    T["🧰 tools 数组<br/>PatientRecord + LabReport + Prescription"] --> M["🧠 模型根据输入自选"]
+    M --> R["tool_calls[0].function.name<br/>= 它选中的格式"]
+    R --> V["✅ 用 name 对应的 schema 校验<br/>(不是固定单一 schema)"]
+    V -- "❌ 失败" --> RETRY["🔁 重试：<br/>你选了 X 但不符合 X 的 schema"]
+    RETRY --> M
+
+    style T fill:#e3f2fd,stroke:#1565c0
+    style M fill:#fff3e0,stroke:#f57c00
+    style V fill:#e8f5e9,stroke:#388e3c
+    style RETRY fill:#ffcdd2,stroke:#c62828
+```
+
+**关键机制（与单 schema 的 4 个差异）：**
+
+| 环节 | 单 schema | 多 schema |
+|---|---|---|
+| `tools` 数组 | 1 个函数 | 多个函数 |
+| `tool_choice` | 强制指定该工具 | **不写 / auto**——模型必须选、但不限定选哪个 |
+| 模型返回 | `arguments` | `arguments` + `function.name`（**name 就是它选的格式**） |
+| 校验层 | 固定用一个 schema | **按 name 找对应 schema** 校验 |
+
+**① 改打包：tools 数组放多个函数（纯 Python 视角）**
+
+```python
+# [AGC:START] tool=Cc author=fangkun
+SCHEMAS = [PATIENT_SCHEMA, LAB_SCHEMA, PRESCRIPTION_SCHEMA]   # 多个 schema
+
+def build_multi_tool_payload(text: str) -> dict:
+    p = _base_payload(text)
+    p["tools"] = [{"type": "function", "function": {
+        "name": s["name"], "description": s["description"], "parameters": s}} for s in SCHEMAS]
+    # ⚠️ 不写 tool_choice：单 schema 是"强制点某一道菜"，多 schema 是"从菜单里选一道，但必须选一道"
+    return p
+# [AGC:END]
+```
+
+**② 取返回：name 和 JSON 一起拿**
+
+```python
+# [AGC:START] tool=Cc author=fangkun
+def extract_multi(payload: dict) -> tuple[str | None, RawResult]:
+    """返回 (模型选中的工具名, JSON)。name=None 表示没走工具调用。"""
+    data = chat_completion(payload)
+    msg = data["choices"][0]["message"]
+    tc = msg.get("tool_calls")
+    if tc:
+        # name 告诉我们是哪种格式，arguments 是该格式的 JSON
+        return tc[0]["function"]["name"], RawResult(tc[0]["function"]["arguments"])
+    return None, RawResult(None, "content 中未找到 JSON 对象")
+# [AGC:END]
+```
+
+**③ 改校验：按 name 分派 schema**
+
+```python
+# [AGC:START] tool=Cc author=fangkun
+def validate_multi(raw: RawResult, name: str) -> dict:
+    if not raw.json_str:
+        raise ValueError(raw.note or "模型未返回可解析的 JSON")
+    schema = {s["name"]: s for s in SCHEMAS}[name]   # ⚠️ 按 name 选对应 schema
+    data = json.loads(raw.json_str)
+    errs = _check(data, schema)                       # 用选中的 schema 校验
+    if errs:
+        raise ValueError("；".join(errs))
+    return data
+# [AGC:END]
+```
+
+**两种"多格式"姿势对比：**
+
+| 姿势 | 做法 | 优点 | 缺点 |
+|---|---|---|---|
+| **多工具自选**（推荐） | tools 数组放多个函数，模型自选，返回 name | 模型原生会区分；校验精确到某一种 | 模型可能"选错类"或输出混合字段 → 靠重试救 |
+| **Union 单工具** | 一个 schema 用 `Union[A, B, C]`（anyOf） | 语义上是"一种多分支" | deepseek/qwen 对 anyOf 支持不完美；模型可能各取一部分拼凑 |
+
+**对闭环的影响**：重试的 prompt 要更具体——**"你调用了 X 工具，但输出不符合 X 的 schema：错误详情"**，
+让模型针对性修正它选的那一类，而不是笼统地说"输出不对"。
+
+---
+
+### 6.9 扩展：模型"选错类"（标签选错 / 字段混杂）怎么兜底？
+
+**多工具 = 开放式选择，模型就可能选错。** 典型场景：
+
+| 翻车方式 | 现象 |
+|---|---|
+| **标签选错** | 内容明明是一份病历，模型却选中了 `LabReport` 工具 |
+| **字段混杂** | 输出既像病历又有化验单字段，两类各取一部分拼凑 |
+
+好在 schema 校验天然能发现：每个 schema 都带 `additionalProperties:false` + 自己的
+`required` 字段列表，**"选错类"几乎必然校验失败**——内容与所选 schema 对不上。
+
+**兜底分三道，优先级从高到低：**
+
+```mermaid
+---
+title: "选错类的三道兜底"
+---
+flowchart TD
+    M["🧠 模型返回<br/>name + JSON"] --> V1["① 按自选的 name 校验"]
+    V1 -->|"✅ 通过"| OK["✅ 收下"]
+    V1 -->|"❌ 失败"| V2["② 逐个 schema 试一遍<br/>内容对、只是标签错?"]
+    V2 -->|"✅ 有 schema 通过"| OK
+    V2 -->|"❌ 全都不符"| RETRY["③ 抛错进重试<br/>错误信息带上它选的 name"]
+    RETRY -->|"重试耗尽"| FB["🛟 兜底 fallback"]
+
+    style OK fill:#e8f5e9,stroke:#388e3c
+    style V1 fill:#e3f2fd,stroke:#1565c0
+    style V2 fill:#fff3e0,stroke:#f57c00
+    style RETRY fill:#ffcdd2,stroke:#c62828
+    style FB fill:#fce4ec,stroke:#c2185b
+```
+
+**为什么第 ② 道这么设计？** 现实中"模型选错标签但内容其实是完整的某一种"很常见。
+如果按 name 校验失败就直接丢给模型重试，等于**白白多花一次请求**；
+先逐个 schema 试一遍，能命中就当场放行，省一次交互。
+
+**增强版校验（纯 Python 视角，替换 §6.8 的 `validate_multi`）：**
+
+```python
+# [AGC:START] tool=Cc author=fangkun
+SCHEMAS_BY_NAME = {s["name"]: s for s in SCHEMAS}
+
+def validate_multi(raw: RawResult, name: str | None) -> dict:
+    """① 按自选 name 校验 → ② 选错标签则逐个 schema 兜底 → ③ 全不符抛错。"""
+    if not raw.json_str:
+        raise ValueError(raw.note or "模型未返回可解析的 JSON")
+    data = json.loads(raw.json_str)
+    primary = SCHEMAS_BY_NAME.get(name)          # 模型自选的那个
+    if primary and not _check(data, primary):    # ① 先按它选的校验
+        return data
+    for s in SCHEMAS:                            # ② 选错标签兜底：内容对就放行
+        if not _check(data, s):
+            return data
+    # ③ 全都不符 → 抛错，交给重试（错误信息带上它选的 name）
+    raise ValueError(
+        f"你选择了 {name}，但输出不符合它，也不符合其它任何 schema；"
+        f"请只输出其中一种的完整字段")
+# [AGC:END]
+```
+
+**与"一失败就重试"的对比：**
+
+| 策略 | 标签选错 + 内容对 | 内容真的混杂 |
+|---|---|---|
+| **一失败就重试** | 浪费 1 次请求 | 重试，模型可能再次拼凑 |
+| **先逐个试（本方案）** | 当场放行，0 次浪费 | 仍走重试，但错误信息更具体 |
+
+> ⚠️ **边界**：第 ② 道的"逐个试"本质是**让校验层做一次模糊匹配**，代价是稍慢（N 个 schema 就跑 N 次 `_check`）。
+> schema 数量多、对准确性要求苛刻时，可以关掉第 ② 道，让"选错"一律进重试——重试耗尽再用第 ③ 道之外的 fallback 兜底。
+
+---
+
+### 6.10 扩展：LangChain 多 schema 的等价写法
+
+**`with_structured_output()` 绑定的是单一 schema，不接受工具数组。** 多 schema 要走 LangChain
+的**工具绑定**路：**`bind_tools([Pydantic 类...])`**——每个 Pydantic 类自动变成一个工具
+（类名 → 工具名，docstring → description，字段 → JSON Schema），等价于 §6.8 手拼的 tools 数组。
+
+```python
+# [AGC:START] tool=Cc author=fangkun
+llm = build_llm()                                  # 裸 ChatOpenAI，不加 with_structured_output
+
+# 一个 Pydantic 类 = 一个工具 = 一个 schema；三个类 = tools 数组三个函数
+bound = llm.bind_tools([PatientRecord, LabReport, Prescription])
+# ⚠️ 不设 tool_choice = auto：模型从菜单里选一道，但必须选一道（正是 §6.8 的要求）
+
+res = bound.invoke(text)                           # 返回 AIMessage，不是 dict
+tc = res.tool_calls[0]                             # {'name': 'LabReport', 'args': {...}}
+name, args = tc["name"], tc["args"]                # name = 模型自选的格式
+
+raw = RawResult(json.dumps(args, ensure_ascii=False))
+data = validate_multi(raw, name)                   # 复用 §6.9 的校验（含选错类兜底）
+# [AGC:END]
+```
+
+**注意一个差别**：`with_structured_output` 把 JSON 藏在 `res.get("raw").tool_calls[0].args` 里
+（要 `include_raw=True` 才拿得到）；而 `bind_tools` 直接挂在 `res.tool_calls[0]` 上，
+没有 include_raw 那层壳。**两条路最终都是同一个函数调用协议。**
+
+**两种写法对比：**
+
+| 维度 | `with_structured_output(Schema)` | `bind_tools([类1, 类2, 类3])` |
+|---|---|---|
+| 支持 schema 数量 | 单一 | 多个 |
+| 工具如何生成 | 内部绑定一个函数 | 每类一个函数 |
+| tool_choice | 内部强制指定 | 不设 = auto，模型自选 |
+| JSON 在哪 | `res["raw"].tool_calls[0].args` | `res.tool_calls[0].args` |
+| 模型选了什么 | 不用关心（只有一个） | 看 `res.tool_calls[0]["name"]` |
+| 校验 | 固定一个 schema | 复用 §6.9 `validate_multi` |
+
+**一句话**：单 schema 用 `with_structured_output`（省心）；多 schema 用 `bind_tools`（模型自选 + 拿 name）——
+底层都是"tools 数组 + 函数调用协议"，校验闭环一条代码都不浪费。
+
+---
+
 ## 七、三版本对比总览
 
 ```mermaid
@@ -1483,7 +1692,234 @@ flowchart TB
 
 ---
 
-## 十二、一句话总结（费曼技巧版）
+## 十二、生产级落地：从"能跑"到"放心跑"
+
+前八章讲完了**原理**（请求体三块并列）和**三套能跑的闭环**。但"能跑"和"生产放心"是两回事——
+§6.8~6.10 让模型"自选格式"，生产上你会遇到四个真实问题：
+
+| 生产问题 | 现象 | 靠什么解决 |
+|---|---|---|
+| **路由错误** | 模型把病历选成化验单 | 架构上把"选类"独立出来 |
+| **重试不收敛** | 模型在两类之间反复横跳 | 错误反馈更具体 + 人工兜底 |
+| **模糊放行** | §6.9 的"逐个试"放过半对 | 语义校验加一道 |
+| **fallback=None** | 上游要么崩要么静默 | 有业务意义的降级 |
+
+**核心答案一句话：生产可靠性不是靠"更多校验、更多重试"堆出来的，而是靠架构上"减少模型做高风险决策的机会，把不可靠性隔离到最小的环节里"。**
+
+> 配套代码：[python/src/structured_output/prod_singlefile.py](https://github.com/kunge2013/LangChainBestPractices/blob/main/python/src/structured_output/prod_singlefile.py)
+
+### 12.1 一次架构转身：让模型做"选择题"，而不是"填空题+自选"
+
+§6.8 让模型**同时回答两个问题**："这是哪类？" + "按这类输出完整 JSON"。两个都难，还互相干扰。
+
+生产级的转身：**路由与生成分离**。先把"这是哪类"拆成一个单独的小步骤（Router），再对选中的**单一 schema**做结构化输出（Extractor）。每一步单一职责、出错率可单独观测、可单独降级。
+
+```mermaid
+---
+title: "生产流水线：Router → Extractor → 两层校验 → 人工兜底"
+---
+flowchart LR
+    IN["📥 输入<br/>病历/化验单/处方…"] --> R1["① 规则路由<br/>关键词/正则<br/>零成本 100% 可解释"]
+    R1 -->|"命中"| R2
+    R1 -->|"判不出"| R2["② 模型路由<br/>做选择题:<br/>这属于哪类?<br/>枚举+置信度"]
+    R2 -->|"置信度低"| HUM["👤 人工队列"]
+    R2 -->|"选中 A 类"| EX["③ 抽取<br/>单一 schema<br/>with_structured_output"]
+    EX --> V1["④a schema 校验<br/>Pydantic 格式层"]
+    V1 --> V2["④b 语义校验<br/>业务规则层"]
+    V2 -->|"✅ 两层都过"| OK["✅ 入库"]
+    V2 -->|"❌"| RETRY["🔁 重试 N 次<br/>错误反馈带具体字段"]
+    RETRY -->|"仍失败"| HUM
+    RETRY --> EX
+
+    style R1 fill:#e8f5e9,stroke:#388e3c
+    style R2 fill:#fff3e0,stroke:#f57c00
+    style EX fill:#e3f2fd,stroke:#1565c0
+    style V1 fill:#f3e5f5,stroke:#7b1fa2
+    style V2 fill:#fce4ec,stroke:#c2185b
+    style HUM fill:#ffcdd2,stroke:#c62828
+    style OK fill:#c8e6c9,stroke:#2e7d32
+```
+
+### 12.2 环节① 规则路由：能规则，就不模型
+
+**原则：能规则就不模型，能选择题就不填空题。** 病历/化验单/处方差异明显，关键词就能判：
+
+```python
+# [AGC:START] tool=Cc author=fangkun
+class RuleRouter:
+    """确定性关键词映射：零成本、零随机、100% 可解释。"""
+    RULES = [
+        ("lab_report",     ["血常规", "白细胞", "体温", "化验"]),
+        ("prescription",   ["剂量", "用法", "一日", "毫克", "处方"]),
+        ("patient_record", ["症状", "咳嗽", "发烧", "门诊"]),
+    ]
+
+    def route(self, text: str) -> RouteResult | None:
+        hits = [name for name, kws in self.RULES if any(k in text for k in kws)]
+        if len(hits) == 1:                       # 唯一命中才敢下判断
+            return RouteResult(DocKind(hits[0]), 1.0, "rule", f"关键词命中:{hits[0]}")
+        if len(hits) > 1:
+            return None                          # 多个命中=模棱两可，交给模型
+        return None                              # 一个都没命中，交给模型
+# [AGC:END]
+```
+
+> 规则只负责"能确定的部分"，**模棱两可必须上交**给模型——规则乱猜比模型猜更可怕（没有置信度概念）。
+
+### 12.3 环节② 模型路由：做"选择题"不是"填空题"
+
+规则判不出时，让模型输出一个**枚举 + 置信度**，而不是一整份 JSON。选择题的 schema 极小、决策面极小：
+
+```python
+# [AGC:START] tool=Cc author=fangkun
+class RouteChoice(BaseModel):
+    """路由选择题：只要一个答案 + 自评置信度。"""
+    model_config = ConfigDict(extra="forbid")
+    kind: DocKind                    # 枚举：patient_record / lab_report / prescription
+    confidence: int = Field(ge=0, le=100)
+
+class ModelRouter:
+    def __init__(self, llm: Any, threshold: float = 0.6) -> None:
+        self._runnable = llm.with_structured_output(RouteChoice, method="function_calling", include_raw=True)
+        self.threshold = threshold
+
+    def route(self, text: str) -> RouteResult:
+        raw = self._runnable.invoke(text).get("raw")
+        if raw is None:
+            return RouteResult(None, 0.0, "model", "路由调用无输出")
+        args = (raw.tool_calls or [{}])[0].get("args", {})
+        kind, conf = args.get("kind"), args.get("confidence", 0) / 100
+        # 低置信度不等于"随便猜一个":直接标记人工,不在下游赌
+        return RouteResult(DocKind(kind) if kind else None, conf, "model", f"置信度{conf:.0%}")
+# [AGC:END]
+```
+
+**置信度阈值的意义**：`conf < 0.6` → **走人工，不赌**。这是"把不可靠性隔离"的关键一步——
+路由错了成本极低（一个小枚举），但会连锁污染后面一整份 JSON 的抽取，所以宁可在入口就分流。
+
+### 12.4 环节③ 抽取：对选中的单一 schema 结构化
+
+路由定案后，**一次只干一件事**：对选中的 schema 做 `with_structured_output`。此时退回最可靠的
+单 schema 场景（第四章大块一的 `RealExtractor` 原样复用）：
+
+```python
+# [AGC:START] tool=Cc author=fangkun
+class SchemaExtractor:
+    """单一 schema 的结构化抽取器：每类文档一个实例。"""
+    def __init__(self, llm: Any, model_cls: type[BaseModel]) -> None:
+        self._runnable = llm.with_structured_output(model_cls, method="function_calling", include_raw=True)
+        self.model_cls = model_cls
+
+    def extract(self, text: str) -> RawResult:
+        raw = self._runnable.invoke(text).get("raw")
+        if raw is None:
+            return RawResult(None, "无原始输出", None)
+        return pick_json(raw)                    # 复用大块一的 _pick_json
+# [AGC:END]
+```
+
+### 12.5 环节④ 两层校验：格式层 + 语义层
+
+**Pydantic 校验管"格式"（字段齐不齐、类型对不对），管不了"业务合不合理"（年龄 200 岁、处方没药名）。**
+所以生产上是**两层**：
+
+```python
+# [AGC:START] tool=Cc author=fangkun
+# 第一层:格式层 —— Pydantic model_validate (复用大块一)
+def schema_errors(model_cls: type[BaseModel], data: dict) -> list[str]:
+    try:
+        model_cls.model_validate(data)
+        return []
+    except ValidationError as exc:
+        return [f"{e['loc']}: {e['msg']}" for e in exc.errors()]
+
+# 第二层:语义层 —— 业务规则,每个 kind 自己的规则表
+def _patient_semantic(obj) -> list[str]:
+    errs = []
+    if not (0 < obj.age < 150): errs.append("语义: 年龄必须 1~149")
+    if not obj.symptoms:         errs.append("语义: 症状不能为空")
+    if obj.contact and not (obj.contact.email or obj.contact.phone):
+        errs.append("语义: contact 至少要 email 或 phone 之一")
+    return errs
+
+SEMANTIC_RULES = {DocKind.PATIENT: _patient_semantic, ...}   # 每个 kind 一张
+
+def collect_errors(kind: DocKind, model_cls: type[BaseModel], data: dict) -> list[str]:
+    return schema_errors(model_cls, data) + SEMANTIC_RULES[kind](model_cls.model_validate(data))
+# [AGC:END]
+```
+
+> 语义层是**我们自己的代码**，不是模型——它是硬保证的最后一公里：模型可能给你一份"格式合法但
+> 业务荒谬"的 JSON，只有语义规则能挡住。
+
+### 12.6 环节⑤ 重试 + 人工兜底 + 观测
+
+重试的**错误反馈必须携带具体字段**（第一层和第二层的错误都拼进去），耗尽后：
+- 有业务意义的 fallback（按 kind 的默认实例）**而不是 None**；
+- 或标记进**人工队列**（`human_review` 状态），由人兜底。
+
+**观测 = 每个环节都有计数，这是生产与演示的最大区别**：路由来源、置信度分布、校验失败率、
+人工介入率各是一个指标，哪个高就修哪个（改关键词？调阈值？换更强模型？）。
+
+```python
+# [AGC:START] tool=Cc author=fangkun
+class ProdMetrics:
+    """按环节分桶计数:谁在拖后腿一目了然。"""
+    def __init__(self) -> None:
+        self.total = 0; self.ok = 0; self.human = 0; self.fallback = 0
+        self.route_source: dict[str, int] = {}
+        self.low_confidence = 0; self.validation_failures = 0
+    def record_route(self, src: str, conf: float) -> None:
+        self.route_source[src] = self.route_source.get(src, 0) + 1
+        if conf < 0.6: self.low_confidence += 1
+    def summary(self) -> dict:
+        return {"total": self.total, "ok": self.ok,
+                "human_review": self.human, "fallback": self.fallback,
+                "validation_failures": self.validation_failures,
+                "route_source": self.route_source,
+                "low_confidence": self.low_confidence,
+                "success_rate_%": round(self.ok / self.total * 100, 2) if self.total else 0.0}
+# [AGC:END]
+```
+
+### 12.7 与 §6.8"一把梭"的对比
+
+| 维度 | §6.8 多工具自选（演示够用） | 生产级流水线（单文件版） |
+|---|---|---|
+| 谁决定类型 | 模型在抽取时顺带选 | **独立 Router 先选**，抽取只管一种 |
+| 类型判断形式 | 从多工具里挑（隐性） | **显式枚举选择题 + 置信度** |
+| 低置信度 | 无概念，照抽 | **分流走人工，不赌** |
+| 校验 | schema 一层 | **schema + 语义两层** |
+| 重试反馈 | "你选了 X 但不符合 X" | 具体字段错误（两层都带） |
+| 失败出口 | fallback=None | **业务默认值 / 人工队列** |
+| 观测 | JSONL 全量 | **按环节分桶指标**，可定位瓶颈 |
+
+### 12.8 最小实现：一个文件 = 一个流水线
+
+整套生产级流水线合并成 **`prod_singlefile.py` 单文件**（不再拆散成多文件），
+每个环节用 `═══` 分隔块平铺，从上到下就是调用顺序，与 §12.1 流水线图一一对应：
+
+```
+python/src/structured_output/prod_singlefile.py
+├── ① 数据模型   三类文档 schema + DocKind 枚举 + 语义规则表
+├── ② 路由       RuleRouter(规则) + ModelRouter(选择题) + Router(组合)
+├── ③ 抽取       SchemaExtractor(单 schema) + FakeExtractor(离线脚本)
+├── ④ 校验       两层 collect_errors()：格式层 + 语义层
+├── ⑤ 闭环       ProductionPipeline: 路由→分流→抽取→校验→重试→人工/兜底
+├── ⑥ 观测       ProdMetrics 环节计数
+└── ⑦ 入口       --fake 离线演示 / 真实调用（--provider qwen|deepseek）
+```
+
+运行（`cd python`，配 OPENAI_* 环境变量）：
+```
+python -m src.structured_output.prod_singlefile --fake   # 离线演示,无需 key
+python -m src.structured_output.prod_singlefile          # 真实调用
+python -m pytest src/structured_output/tests -q          # 单元测试
+```
+
+---
+
+## 十三、一句话总结（费曼技巧版）
 
 **结构化输出是什么？**
 > 在发给模型的请求体里，除了你说的话（messages），平行塞进一张空表（tools）和一条死命令
