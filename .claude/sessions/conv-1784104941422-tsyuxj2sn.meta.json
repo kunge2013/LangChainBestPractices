@@ -3,14 +3,13 @@
   "title": "Generate city business list",
   "titleGenerationStatus": "success",
   "createdAt": 1784104941424,
-  "updatedAt": 1785893094159,
-  "lastResponseAt": 1785893094159,
+  "updatedAt": 1788932002201,
+  "lastResponseAt": 1788932002201,
   "sessionId": "0e15bda0-f0d8-4895-9457-178c6baba6f4",
   "sdkSessionId": "0e15bda0-f0d8-4895-9457-178c6baba6f4",
   "previousSdkSessionIds": [
     "5e216a49-47f1-48bd-9143-7a85b1e1e671"
   ],
-  "currentNote": "python/src/base_practice/16.chatbi/chatbi.md",
   "usage": {
     "model": "glm-4.7",
     "inputTokens": 94899,

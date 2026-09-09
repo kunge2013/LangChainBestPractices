@@ -65,7 +65,7 @@
   "locale": "en",
   "claudeCliPath": "",
   "claudeCliPathsByHost": {
-    "DESKTOP-4ERJCJK": "D:\\npm\\prefix\\node_modules\\@anthropic-ai\\claude-code\\cli.js"
+    "DESKTOP-4ERJCJK": "D:\\npm\\prefix\\node_modules\\@anthropic-ai\\claude-code\\cli-wrapper.cjs"
   },
   "loadUserClaudeSettings": true,
   "lastClaudeModel": "haiku",

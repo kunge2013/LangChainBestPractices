@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "50618a9dbbb38a41",
+        "id": "2e4a7fb13fba4034",
         "type": "tabs",
         "children": [
           {
-            "id": "32d1a61686cff11e",
+            "id": "b927b5eefe3c4b33",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/superpowers/plans/2026-08-04-ontology-expansion-implementation.md",
+                "file": "doc/python/langchain/langchain结构化输出原理-大白话版本.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2026-08-04-ontology-expansion-implementation"
+              "title": "langchain结构化输出原理-大白话版本"
             }
           }
         ]
@@ -80,7 +80,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 362.5
+    "width": 485.5
   },
   "right": {
     "id": "9d7e57232599b653",
@@ -158,13 +158,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "doc/ts/Deep Agents/source_code/deep-agent-subagent-cards/deep-agent-subagent-cards/README.md",
+                "file": "doc/python/langchain/langchain结构化输出原理-大白话版本.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "README 的大纲"
+              "title": "大纲"
             }
           },
           {
@@ -178,7 +178,7 @@
             }
           }
         ],
-        "currentTab": 5
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -197,19 +197,34 @@
       "claudian:Open Claudian": false
     }
   },
-  "active": "d0fa7fecc6d2c9ea",
+  "active": "b927b5eefe3c4b33",
   "lastOpenFiles": [
-    "python/src/base_practice/17.neo4j_agent/1.neo4j-langchain.py~",
-    "python/src/base_practice/17.neo4j_agent/1.neo4j-langchain.py",
-    "doc/python/langchain-neo4j",
-    "python/src/base_practice/17.neo4j_agent/__init__.py",
-    "python/src/base_practice/17.neo4j_agent",
-    "python/src/base_practice/17/17.neo4j_agent/__init__.py",
-    "python/src/base_practice/17/17.neo4j_agent",
-    "python/src/base_practice/17/__init__.py",
-    "python/src/base_practice/17/neo4j_agent/__init__.py",
-    "python/src/base_practice/17/neo4j_agent",
-    "python/src/base_practice/17",
+    "python/src/structured_output/doc/langchain结构化输出原理-大白话版本.md",
+    "python/src/structured_output/doc/4.LangChain-结构化输出入门(零基础版).md",
+    "python/src/structured_output/doc/3.LangChain-结构化输出原理(JSON保证与可靠性).md",
+    "python/src/structured_output/doc/2.LangChain-结构化输出(JSON保证与可靠性).md",
+    "python/src/structured_output/doc",
+    "python/src/structured_output/4.LangChain-结构化输出入门(零基础版).md",
+    "python/src/structured_output/3.LangChain-结构化输出原理(JSON保证与可靠性).md",
+    "python/src/structured_output/2.LangChain-结构化输出(JSON保证与可靠性).md",
+    "python/src/structured_output/langchain结构化输出原理-大白话版本.md",
+    "doc/python/langchain/langchain结构化输出原理-大白话版本.md.tmp.8216.819fe848301e",
+    "doc/python/langchain/langchain结构化输出原理-大白话版本.md.tmp.8216.ddf60b4de799",
+    "doc/python/langchain/langchain结构化输出原理-大白话版本.md.tmp.8216.53d5632a906b",
+    "doc/python/langchain/langchain结构化输出原理-大白话版本.md.tmp.8216.fd7e8de74d93",
+    "doc/python/langchain/langchain结构化输出原理-大白话版本.md.tmp.8216.0180071b1078",
+    "doc/python/langchain/langchain结构化输出原理-大白话版本.md.tmp.8216.081194b4762e",
+    "doc/python/langchain/langchain结构化输出原理-大白话版本.md.tmp.8216.fd3b5553683b",
+    "doc/python/langchain/langchain结构化输出原理-大白话版本.md.tmp.8216.c7649cf110bf",
+    "doc/python/langchain/langchain结构化输出原理-大白话版本.md.tmp.8216.3045359dcc0f",
+    "doc/python/langchain/4.LangChain-结构化输出入门(零基础版).md",
+    "doc/python/langchain/langchain结构化输出原理-大白话版本.md",
+    "doc/python/langchain/3.LangChain-结构化输出原理(JSON保证与可靠性).md",
+    "doc/python/langchain/3.LangChain-结构化输出原理(JSON保证与可靠性) - 大白话版.md",
+    "doc/python/langchain/2.LangChain-结构化输出(JSON保证与可靠性).md",
+    "python/doc/1.LangChain Agent 输出不完整问题分析与解决方案.md",
+    "知识付费全流程.md",
+    "doc/python/langchain/1.LangChain-short-term-memory(短期记忆).md",
     "python/src/base_practice/chatbi/ontology/README.md",
     "python/src/base_practice/chatbi/chatbi.md",
     "python/src/base_practice/chatbi/1.2.ChatBiAgentOntology本体设计.md",
@@ -220,21 +235,6 @@
     "docs/superpowers/plans/2026-08-04-ontology-expansion-implementation.md",
     "pytest-cache-files-zhbyqi_l/README.md",
     "docs/superpowers/specs/2026-08-04-ontology-expansion-design.md",
-    "python/src/base_practice/16.chatbi/chatbi.md",
-    "python/src/base_practice/16.chatbi/1.1.多维度-多指标mut_metice.md",
-    "python/src/base_practice/16.chatbi/多维度-多指标mut_metice.md",
-    "python/src/base_practice/15.multi-agent/langsmith.deploy.md",
-    "doc/python/langchain/1.LangChain-short-term-memory(短期记忆).md",
-    "doc/python/Deep Agents/Deep Agent 理解与 agent.py 核心解析.md",
-    "doc/python/Test/1. 可视化测试-Get started with Studio.md",
-    "doc/python/Deep Agents/1.Build a data analysis agent.md",
-    "doc/ts/learn/Retrieval Augmented Generation (RAG) with Deep Agents.md",
-    "doc/ts/Deep Agents/20. Agent Client Protocol (ACP).md",
-    "doc/ts/Deep Agents/19.Sandbox.md",
-    "doc/ts/Deep Agents/9.Skills.md",
-    "doc/ts/Deep Agents/source_code/deep-agent-subagent-cards/deep-agent-subagent-cards/README.md",
-    "typescript/packages/agent/node_modules/@ag-ui/a2ui-toolkit/README.md",
-    "typescript/packages/agent/node_modules/fast-json-patch/README.md",
     "typescript/packages/agent/node_modules/winston-console-format/demo.png",
     "typescript/packages/agent/node_modules/pino-pretty/demo.png",
     "typescript/packages/agent/node_modules/phoenix/priv/static/phoenix.png",
