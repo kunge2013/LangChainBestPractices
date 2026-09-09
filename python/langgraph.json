@@ -5,7 +5,7 @@
     "./src/base_practice/*"
   ],
   "graphs": {
-    "MovieAgent": "./src/base_practice/18.graph_rag/neo4j-graphrag-doc/graph_rag/movie/movie_agent.py:agent"
+    "MultiAgentDev": "./src/base_practice/19.multi-agent/graph_entry.py:graph"
   },
   "env": ".env"
 }
